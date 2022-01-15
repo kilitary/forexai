@@ -78,7 +78,7 @@ namespace FinancePermutator.Forms
         {
             loadPricesButton.Text = @"loading";
 
-			FinancePermutator.Media.Audio.playFoto();
+			FinancePermutator.Media.Audio.PlayFoto();
 
             LoadPrices.Exec();
         }

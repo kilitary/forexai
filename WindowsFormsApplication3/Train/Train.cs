@@ -686,7 +686,7 @@ namespace FinancePermutator.Train
 				return -1;
 			}
 
-			Audio.playStart();
+			Audio.PlayStart();
 
 			bool foted = false;
 
@@ -755,7 +755,7 @@ namespace FinancePermutator.Train
 					networksSuccess++;
 					if (!foted)
 					{
-						Audio.playFoto();
+						Audio.PlayFoto();
 						foted = true;
 					}
 				}

@@ -2,7 +2,7 @@ namespace FinancePermutator.Media
 {
 	public static class Audio
 	{
-		public static void playFoto()
+		public static void PlayFoto()
 		{
 			System.Media.SoundPlayer player = new System.Media.SoundPlayer
 			{
@@ -11,7 +11,7 @@ namespace FinancePermutator.Media
 			player.Play();
 		}
 
-		public static void playCancel()
+		public static void PlayCancel()
 		{
 			System.Media.SoundPlayer player = new System.Media.SoundPlayer
 			{
@@ -20,7 +20,7 @@ namespace FinancePermutator.Media
 			player.Play();
 		}
 
-		public static void playStart()
+		public static void PlayStart()
 		{
 			System.Media.SoundPlayer player = new System.Media.SoundPlayer
 			{
