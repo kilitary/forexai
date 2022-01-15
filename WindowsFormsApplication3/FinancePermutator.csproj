@@ -316,6 +316,7 @@
   <ItemGroup>
     <Content Include="chancel.wav" />
     <Content Include="foto.wav" />
+    <None Include="Resources\39.gif" />
     <Content Include="start.wav" />
     <Content Include="todo.txt" />
   </ItemGroup>
@@ -331,12 +332,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.7\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.7\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets'))" />
     <Error Condition="!Exists('..\packages\CSAudioPlayer.1.1.2\build\CSAudioPlayer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CSAudioPlayer.1.1.2\build\CSAudioPlayer.targets'))" />
-    <Error Condition="!Exists('..\packages\FANNCSharp-x64.0.1.8\build\FANNCSharp-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FANNCSharp-x64.0.1.8\build\FANNCSharp-x64.targets'))" />
     <Error Condition="!Exists('..\packages\FANNCSharp-x86.0.1.8\build\FANNCSharp-x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FANNCSharp-x86.0.1.8\build\FANNCSharp-x86.targets'))" />
   </Target>
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.7\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.7\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
   <Import Project="..\packages\CSAudioPlayer.1.1.2\build\CSAudioPlayer.targets" Condition="Exists('..\packages\CSAudioPlayer.1.1.2\build\CSAudioPlayer.targets')" />
-  <Import Project="..\packages\FANNCSharp-x64.0.1.8\build\FANNCSharp-x64.targets" Condition="Exists('..\packages\FANNCSharp-x64.0.1.8\build\FANNCSharp-x64.targets')" />
   <Import Project="..\packages\FANNCSharp-x86.0.1.8\build\FANNCSharp-x86.targets" Condition="Exists('..\packages\FANNCSharp-x86.0.1.8\build\FANNCSharp-x86.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

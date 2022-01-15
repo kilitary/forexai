@@ -7,14 +7,14 @@ using static FinancePermutator.Tools;
 
 namespace FinancePermutator.Prices
 {
-	class LoadPrices
+	internal class LoadPrices
 	{
 		public static void Exec() => new Thread(
 			 () =>
 			 {
 				 long lengthTotal = new FileInfo(Configuration.PriceFileName).Length;
 
-				 debug($"ManagedThreadId: {Thread.CurrentThread.ManagedThreadId.ToString("00000").PadRight(10)}");
+				 debug($"ManagedThreadId: {Thread.CurrentThread.ManagedThreadId,-10:00000}");
 				 debug($"Length: {lengthTotal.ToString().PadLeft(10)}");
 
 				 int lineNum = 0;
@@ -22,11 +22,11 @@ namespace FinancePermutator.Prices
 				 bool bFirst = false;
 				 var lines = File.ReadAllLines(Configuration.PriceFileName);
 				 double prevProcNum = 0;
-				 foreach(string line in lines)
+				 foreach (string line in lines)
 				 {
 					 string[] tokens = line.Split(',');
 
-					 if(!bFirst)
+					 if (!bFirst)
 					 {
 						 bFirst = true;
 						 first = DateTime.Parse(tokens[0] + " " + tokens[1]);
@@ -46,18 +46,18 @@ namespace FinancePermutator.Prices
 
 					 Data.Prices.Add(priceEntry);
 
-					 if(lineNum % 1850 == 0)
+					 if (lineNum % 1850 == 0)
 					 {
 						 debug($"load {lineNum} {timeDate}");
 						 Program.Form.chart.Invoke(
-								 (MethodInvoker) (() => Program.Form.chart.Series["Series1"].Points.AddXY(priceEntry.Date, priceEntry.Open)));
+								 (MethodInvoker)(() => Program.Form.chart.Series["Series1"].Points.AddXY(priceEntry.Date, priceEntry.Open)));
 					 }
 
-					 double procNum = ((double) lineNum / ((double) lines.Length) * 100.0);
+					 double procNum = ((double)lineNum / ((double)lines.Length) * 100.0);
 
-					 if((int) procNum != (int) prevProcNum)
+					 if ((int)procNum != (int)prevProcNum)
 					 {
-						 Program.Form.chart.Invoke((MethodInvoker) (() => Program.Form.mainProgressBar.Value = (int) procNum));
+						 Program.Form.chart.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)procNum));
 						 prevProcNum = procNum;
 					 }
 
@@ -67,7 +67,7 @@ namespace FinancePermutator.Prices
 				 debug($"lines: {lineNum}");
 				 debug($"first time: {first}");
 
-				 Program.Form.loadPricesButton.Invoke((MethodInvoker) (() => Program.Form.loadPricesButton.Text = lineNum + @" OK"));
+				 Program.Form.loadPricesButton.Invoke((MethodInvoker)(() => Program.Form.loadPricesButton.Text = lineNum + @" OK"));
 			 }).Start();
 	}
 }

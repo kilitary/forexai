@@ -1,17 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using FANNCSharp;
 using FANNCSharp.Double;
 using FinancePermutator.Generators;
-using Microsoft.AppCenter;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
-using static FinancePermutator.Tools;
+using Newtonsoft.Json;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using FANNCSharp;
-using Newtonsoft.Json;
+using static FinancePermutator.Tools;
 
 /*
 				░░ ♡ ▄▀▀▀▄░░░
@@ -30,158 +25,168 @@ using Newtonsoft.Json;
 
 namespace FinancePermutator.Networks
 {
-    class Network
-    {
-        private NeuralNet network;
-        public float MSE => network.MSE;
-        public uint ErrNo => network.ErrNo;
-        public string ErrStr => network.ErrStr;
-        public uint BitFail => network.BitFail;
-        public bool newNetwork = false;
-        public float temperature = Configuration.startSarTemp;
+	internal class Network
+	{
+		private NeuralNet network;
+		public float MSE => network.MSE;
+		public uint ErrNo => network.ErrNo;
+		public string ErrStr => network.ErrStr;
+		public uint BitFail => network.BitFail;
+		public bool newNetwork = false;
+		public float temperature = Configuration.startSarTemp;
 
-        public double Test(TrainingData testData)
-        {
-            return network.TestDataParallel(testData, 4);
-        }
+		public double Test(TrainingData testData)
+		{
+			return network.TestDataParallel(testData, 4);
+		}
 
-        public TrainingAlgorithm TrainingAlgorithm
-        {
-            get => network.TrainingAlgorithm;
-            set => network.TrainingAlgorithm = value;
-        }
+		public TrainingAlgorithm TrainingAlgorithm
+		{
+			get => network.TrainingAlgorithm;
+			set => network.TrainingAlgorithm = value;
+		}
 
-        public float SarpropStepErrorShift
-        {
-            get => network.SarpropStepErrorShift;
-            set => network.SarpropStepErrorShift = value;
-        }
+		public float SarpropStepErrorShift
+		{
+			get => network.SarpropStepErrorShift;
+			set => network.SarpropStepErrorShift = value;
+		}
 
-        public float SarTemp
-        {
-            get { return network.SarpropTemperature; }
+		public float SarTemp
+		{
+			get { return network.SarpropTemperature; }
 
-            set { network.SarpropTemperature = value; }
-        }
+			set { network.SarpropTemperature = value; }
+		}
 
-        public void SetupActivation()
-        {
-            var activationFunc = ActivationFunction.SIGMOID_SYMMETRIC;
-            Program.Form.AddConfiguration($"\r\n InputActFunc i: {activationFunc}");
-            network.SetActivationFunctionLayer(activationFunc, 0);
-            activationFunc = ActivationFunctionGenerator.GetRandomFunction();
-            Program.Form.AddConfiguration($" LayerActFunc m: {activationFunc}");
-            network.SetActivationFunctionLayer(activationFunc, 1);
-            activationFunc = ActivationFunctionGenerator.GetRandomFunction();
-            Program.Form.AddConfiguration($" LayerActFunc o: {activationFunc}");
-            network.SetActivationFunctionLayer(activationFunc, 2);
+		public void SetupActivation()
+		{
+			var activationFunc = ActivationFunction.SIGMOID_SYMMETRIC;
+			Program.Form.AddConfiguration($"\r\n InputActFunc i: {activationFunc}");
+			network.SetActivationFunctionLayer(activationFunc, 0);
+			activationFunc = ActivationFunctionGenerator.GetRandomFunction();
+			Program.Form.AddConfiguration($" LayerActFunc m: {activationFunc}");
+			network.SetActivationFunctionLayer(activationFunc, 1);
+			activationFunc = ActivationFunctionGenerator.GetRandomFunction();
+			Program.Form.AddConfiguration($" LayerActFunc o: {activationFunc}");
+			network.SetActivationFunctionLayer(activationFunc, 2);
 
-            temperature = 50.0F;
-        }
+			temperature = 50.0F;
+		}
 
-        /*
-                \\         //
-                 \\     //
-                   \\ //
-                  (O)
-                   //#\\
-                 // ### \\
-                 //  #####  \\
-                  #######
-                  ### ###
-              '' """  """"  "'"""""
-        */
-        public void SaveNetwork()
-        {
-            var netDirectory = $"NET_{network.GetHashCode():X}";
+		/*
+				\\         //
+				 \\     //
+				   \\ //
+				  (O)
+				   //#\\
+				 // ### \\
+				 //  #####  \\
+				  #######
+				  ### ###
+			  '' """  """"  "'"""""
+		*/
 
-            if (!Directory.Exists($"c:\\forexAI\\{netDirectory}"))
-                Directory.CreateDirectory($"c:\\forexAI\\{netDirectory}");
+		public void SaveNetwork()
+		{
+			var netDirectory = $"NET_{network.GetHashCode():X}";
 
-            network.Save($@"c:\forexAI\{netDirectory}\FANN.net");
+			if (!Directory.Exists($"c:\\forexAI\\{netDirectory}"))
+				Directory.CreateDirectory($"c:\\forexAI\\{netDirectory}");
 
-            File.Copy($@"{GetTempPath()}\traindata.dat", $@"c:\forexAI\{netDirectory}\traindata.dat", true);
-            File.Copy($@"{GetTempPath()}\testdata.dat", $@"c:\forexAI\{netDirectory}\testdata.dat", true);
+			network.Save($@"c:\forexAI\{netDirectory}\FANN.net");
 
-            Program.Form.chart.Invoke((MethodInvoker) (() =>
-            {
-                Program.Form.chart.SaveImage($@"c:\forexAI\{netDirectory}\chart.jpg", ChartImageFormat.Jpeg);
+			File.Copy($@"{GetTempPath()}\traindata.dat", $@"c:\forexAI\{netDirectory}\traindata.dat", true);
+			File.Copy($@"{GetTempPath()}\testdata.dat", $@"c:\forexAI\{netDirectory}\testdata.dat", true);
 
-                using (var tw = new StreamWriter($@"c:\forexAI\{netDirectory}\debug.log"))
-                {
-                    foreach (var item in Program.Form.debugView.Items)
-                        tw.WriteLine(item.ToString());
-                }
+			Program.Form.chart.Invoke((MethodInvoker)(() =>
+			{
+				Program.Form.chart.SaveImage($@"c:\forexAI\{netDirectory}\chart.jpg", ChartImageFormat.Jpeg);
 
-                using (var cf = new StreamWriter($@"c:\forexAI\{netDirectory}\configuration.txt"))
-                {
-                    cf.WriteLine(Program.Form.configurationTab.Text);
-                }
+				using (var tw = new StreamWriter($@"c:\forexAI\{netDirectory}\debug.log"))
+				{
+					foreach (var item in Program.Form.debugView.Items)
+						tw.WriteLine(item.ToString());
+				}
 
-                using (var cf = new StreamWriter($@"c:\forexAI\{netDirectory}\functions.json"))
-                {
-                    cf.WriteLine(JsonConvert.SerializeObject(Data.FunctionConfiguration, Formatting.Indented));
-                }
-            }));
-        }
+				using (var cf = new StreamWriter($@"c:\forexAI\{netDirectory}\configuration.txt"))
+				{
+					cf.WriteLine(Program.Form.configurationTab.Text);
+				}
 
-        public void InitWeights(TrainingData trainData)
-        {
-            network.InitWeights(trainData);
-        }
+				using (var cf = new StreamWriter($@"c:\forexAI\{netDirectory}\functions.json"))
+				{
+					cf.WriteLine(JsonConvert.SerializeObject(Data.FunctionConfiguration, Formatting.Indented));
+				}
+			}));
+		}
 
-        public Network(NetworkType layer, uint numInput, uint numHidden, uint numOutput)
-        {
-            network = new NeuralNet(layer, 3, numInput, numHidden, numOutput);
-            debug($"network {network} input: {numInput} numHidden: {numHidden} output: {numOutput}");
-        }
+		public void InitWeights(TrainingData trainData)
+		{
+			network.InitWeights(trainData);
+		}
 
-        public double Train(TrainingData trainData)
-        {
-            network.SetScalingParams(trainData, -1.0f, 1.0f, -1.0f, 1.0f);
+		public Network(NetworkType layer, uint numInput, uint numHidden, uint numOutput)
+		{
+			network = new NeuralNet(layer, 3, numInput, numHidden, numOutput);
+			debug($"network {network} input: {numInput} numHidden: {numHidden} output: {numOutput}");
+		}
 
-            var ret = 0.0;
+		public double Train(TrainingData trainData)
+		{
+			network.SetScalingParams(trainData, -1.0f, 1.0f, -1.0f, 1.0f);
 
-            switch (network.TrainingAlgorithm)
-            {
-                case TrainingAlgorithm.TRAIN_SARPROP:
-                    network.SarpropTemperature -= (float) Configuration.heatDelta;
-                    temperature -= Configuration.heatDelta;
-                    debug($"set temp {temperature}");
-                    ret = network.TrainEpochSarpropParallel(trainData, 4);
-                    break;
-                case TrainingAlgorithm.TRAIN_QUICKPROP:
-                    ret = network.TrainEpochQuickpropParallel(trainData, 4);
-                    break;
-                case TrainingAlgorithm.TRAIN_RPROP:
-                    ret = network.TrainEpochIrpropmParallel(trainData, 4);
-                    break;
-            }
+			var ret = 0.0;
 
-            return ret;
-        }
+			switch (network.TrainingAlgorithm)
+			{
+				case TrainingAlgorithm.TRAIN_SARPROP:
+					network.SarpropTemperature *= (Configuration.heatDelta);
+					temperature *= (Configuration.heatDelta);
 
-        public double[] Run(double[] input)
-        {
-            double[] outputData = network.Run(input);
-            return outputData;
-        }
+					debug($"set temp {temperature}");
 
-        public void Save(string name)
-        {
-            debug($"saving network 0x{network.GetHashCode()} as {name}");
-            network.Save(name);
+					Program.Form.chart.Invoke((MethodInvoker)(() =>
+					{
+						Program.Form.label3.Text = $"{(float)temperature}";
+					}));
 
-            if (newNetwork)
-            {
-                Analytics.TrackEvent($"New network mined [0x{network.GetHashCode():x}]");
-                newNetwork = false;
-            }
-        }
+					ret = network.TrainEpochSarpropParallel(trainData, 4);
+					break;
 
-        internal void SetupScaling(TrainingData trainData)
-        {
-            network.SetScalingParams(trainData, -1.0f, 1.0f, -1.0f, 1.0f);
-        }
-    }
+				case TrainingAlgorithm.TRAIN_QUICKPROP:
+					ret = network.TrainEpochQuickpropParallel(trainData, 4);
+					break;
+
+				case TrainingAlgorithm.TRAIN_RPROP:
+					ret = network.TrainEpochIrpropmParallel(trainData, 4);
+					break;
+			}
+
+			return ret;
+		}
+
+		public double[] Run(double[] input)
+		{
+			double[] outputData = network.Run(input);
+			return outputData;
+		}
+
+		public void Save(string name)
+		{
+			debug($"saving network 0x{network.GetHashCode()} as {name}");
+			network.Save(name);
+
+			if (newNetwork)
+			{
+				Analytics.TrackEvent($"New network mined [0x{network.GetHashCode():x}]");
+				newNetwork = false;
+			}
+		}
+
+		internal void SetupScaling(TrainingData trainData)
+		{
+			network.SetScalingParams(trainData, -1.0f, 1.0f, -1.0f, 1.0f);
+		}
+	}
 }

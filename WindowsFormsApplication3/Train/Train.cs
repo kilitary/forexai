@@ -129,14 +129,14 @@ namespace FinancePermutator.Train
 
 		/*
 
-            +------+.      +------+       +------+       +------+      .+------+
-        |`.    | `.    |\     |\      |      |      /|     /|    .' |    .'|
-        |  `+--+---+   | +----+-+     +------+     +-+----+ |   +---+--+'  |
-        |   |  |   |   | |    | |     |      |     | |    | |   |   |  |   |
-        +---+--+.  |   +-+----+ |     +------+     | +----+-+   |  .+--+---+
-         `. |    `.|    \|     \|     |      |     |/     |/    |.'    | .'
-           `+------+     +------+     +------+     +------+     +------+'
-        */
+			+------+.      +------+       +------+       +------+      .+------+
+		|`.    | `.    |\     |\      |      |      /|     /|    .' |    .'|
+		|  `+--+---+   | +----+-+     +------+     +-+----+ |   +---+--+'  |
+		|   |  |   |   | |    | |     |      |     | |    | |   |   |  |   |
+		+---+--+.  |   +-+----+ |     +------+     | +----+-+   |  .+--+---+
+		 `. |    `.|    \|     \|     |      |     |/     |/    |.'    | .'
+		   `+------+     +------+     +------+     +------+     +------+'
+		*/
 
 		public void GenerateTrainData()
 		{
@@ -165,7 +165,7 @@ namespace FinancePermutator.Train
 
 				SetupFunctions(randomSeed);
 
-				selectedInputDimension = XRandom.next(8, XRandom.next(9, Configuration.maxInputDimension));
+				selectedInputDimension = XRandom.Next(8, XRandom.Next(9, Configuration.maxInputDimension));
 
 				Program.Form.AddConfiguration($"\r\nInputDimension: {selectedInputDimension}\r\n");
 
@@ -253,26 +253,26 @@ namespace FinancePermutator.Train
 		}
 
 		/*
-            ／ イ(((ヽ
-            (ﾉ ￣Ｙ＼
-            |　(＼　(. /) ｜ )
-            ヽ ヽ` ( ͡° ͜ʖ ͡°) _ノ /
-            ＼ |　⌒Ｙ⌒　/ /
-            ｜ヽ　 ｜　 ﾉ ／
-            ＼トー仝ーイ
-            ｜ ミ土彡/
-            )\ ° /
-            ( \ /
-            / / ѼΞΞΞΞΞΞΞD
-            / / / \ \ \
-            (( ). ) ).)
-            ( ). ( | |
-            | / \ |*/
+			／ イ(((ヽ
+			(ﾉ ￣Ｙ＼
+			|　(＼　(. /) ｜ )
+			ヽ ヽ` ( ͡° ͜ʖ ͡°) _ノ /
+			＼ |　⌒Ｙ⌒　/ /
+			｜ヽ　 ｜　 ﾉ ／
+			＼トー仝ーイ
+			｜ ミ土彡/
+			)\ ° /
+			( \ /
+			/ / ѼΞΞΞΞΞΞΞD
+			/ / / \ \ \
+			(( ). ) ).)
+			( ). ( | |
+			| / \ |*/
 
 		private void SetupFunctions(int randomSeedLocal)
 		{
 			SetStats();
-			int functionsCount = XRandom.next(Configuration.MinTaFunctionsCount, Configuration.MinTaFunctionsCount + 8);
+			int functionsCount = XRandom.Next(Configuration.MinTaFunctionsCount, Configuration.MinTaFunctionsCount + 8);
 
 			debug($"selecting functions Count={functionsCount}");
 			Program.Form.ConfigurationClear();
@@ -338,7 +338,7 @@ namespace FinancePermutator.Train
 					["methodInfo"] = selectedMethosdInfo
 				};
 
-				randomSeedLocal = unixTimestamp + XRandom.next(255);
+				randomSeedLocal = unixTimestamp + XRandom.Next(255);
 			}
 
 			StringBuilder functions = new StringBuilder();
@@ -355,16 +355,16 @@ namespace FinancePermutator.Train
 		}
 
 		/*		_______________________________________________________
-                  |                                                      |
-               /    |                                                      |
-              /---, |                                                      |
-             -----# ==| |                                                      |
-             | :) # ==| |                                                      |
-          -----'----#   | |______________________________________________________|
-          |)___()  '#   |______====____   \___________________________________|
-         [_/,-,\"--"------ //,-,  ,-,\\\   |/             //,-,  ,-,  ,-,\\ __#
-           ( 0 )|===******||( 0 )( 0 )||-  o              '( 0 )( 0 )( 0 )||
-    ----'-'--------------'-'--'-'-----------------------'-'--'-'--'-'--------------*/
+				  |                                                      |
+			   /    |                                                      |
+			  /---, |                                                      |
+			 -----# ==| |                                                      |
+			 | :) # ==| |                                                      |
+		  -----'----#   | |______________________________________________________|
+		  |)___()  '#   |______====____   \___________________________________|
+		 [_/,-,\"--"------ //,-,  ,-,\\\   |/             //,-,  ,-,  ,-,\\ __#
+		   ( 0 )|===******||( 0 )( 0 )||-  o              '( 0 )( 0 )( 0 )||
+	----'-'--------------'-'--'-'-----------------------'-'--'-'--'-'--------------*/
 
 		public double CalculateHitRatio(Network net, double[][] inputs, double[][] desiredOutputs)
 		{
@@ -587,23 +587,29 @@ namespace FinancePermutator.Train
 			uint numNeurons = Configuration.DefaultHiddenNeurons > 0 ? Configuration.DefaultHiddenNeurons : inputCount / 2 - 1;
 			debug($"new network: numinputs: {inputCount} neurons: {numNeurons}");
 
-			Program.Form.AddConfiguration($"\r\nConfig hash: {XRandom.randomString()}\r\n\r\nNetwork:\r\n inputs: {inputCount} neurons: {numNeurons}");
+			Program.Form.AddConfiguration($"\r\nConfig hash: {XRandom.RandomString()}\r\n\r\nNetwork:\r\n inputs: {inputCount} neurons: {numNeurons}");
 
 			NetworkType layer = NetworkType.SHORTCUT;
 
 			TrainingAlgorithm algo = Configuration.TrainAlgo;
-			switch (Program.Form.listTrain.SelectedIndex)
+
+			Program.Form.listTrain.Invoke((MethodInvoker)(() =>
 			{
-				case 0:
-					algo = TrainingAlgorithm.TRAIN_SARPROP;
-					break;
-				case 1:
-					algo = TrainingAlgorithm.TRAIN_QUICKPROP;
-					break;
-				case 2:
-					algo = TrainingAlgorithm.TRAIN_RPROP;
-					break;
-			}
+				switch (Program.Form.listTrain.SelectedIndex)
+				{
+					case 0:
+						algo = TrainingAlgorithm.TRAIN_SARPROP;
+						break;
+
+					case 1:
+						algo = TrainingAlgorithm.TRAIN_QUICKPROP;
+						break;
+
+					case 2:
+						algo = TrainingAlgorithm.TRAIN_RPROP;
+						break;
+				}
+			}));
 
 			debug($"train method: {algo}");
 
@@ -619,21 +625,21 @@ namespace FinancePermutator.Train
 		}
 
 		/*			 *
-        ░░ ♡ ▄▀▀▀▄░░░
-        ▄███▀░◐░░░▌░░░░░░░
-        ░░░░▌░░░░░▐░░░░░░░
-        ░░░░▐░░░░░▐░░░░░░░
-        ░░░░▌░░░░░▐▄▄░░░░░
-        ░░░░▌░░░░▄▀▒▒▀▀▀▀▄
-        ░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
-        ░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
-        ░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
-        ░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
-        ░░░░░░░░░░░▌▌░▌▌░░░░░
-        ░░░░░░░░░░░▌▌░▌▌░░░░░
-        ░░░░░░░░░▄▄▌▌▄▌▌░░░░░
-        -----------
-        */
+		░░ ♡ ▄▀▀▀▄░░░
+		▄███▀░◐░░░▌░░░░░░░
+		░░░░▌░░░░░▐░░░░░░░
+		░░░░▐░░░░░▐░░░░░░░
+		░░░░▌░░░░░▐▄▄░░░░░
+		░░░░▌░░░░▄▀▒▒▀▀▀▀▄
+		░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
+		░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
+		░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
+		░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
+		░░░░░░░░░░░▌▌░▌▌░░░░░
+		░░░░░░░░░░░▌▌░▌▌░░░░░
+		░░░░░░░░░▄▄▌▌▄▌▌░░░░░
+		-----------
+		*/
 
 		public static void SetStats()
 		{
@@ -677,20 +683,16 @@ namespace FinancePermutator.Train
 		private int TrainNetwork(ref double[][] inputSetsLocal, ref double[][] outputSetsLocal)
 		{
 			if (PrepareNetwork(ref inputSetsLocal, ref outputSetsLocal) == -1)
-			{
 				return -1;
-			}
 
 			if (network == null)
-			{
 				return -1;
-			}
 
 			Audio.PlayStart();
 
 			bool foted = false;
 
-			debug($"starting train on network #{networksProcessed} id: 0x{network.GetHashCode():X}");
+			debug($"starting train on network #{networksProcessed} id: 0x{network.GetHashCode():X}, trainData: {trainData.TrainDataLength}");
 			saveTestHitRatio = 0;
 
 			for (int currentEpoch = 0; runScan && inputSetsLocal != null && outputSetsLocal != null; currentEpoch++)
@@ -762,23 +764,24 @@ namespace FinancePermutator.Train
 
 				// draw graphics
 				int epoch = currentEpoch;
-				if (Program.Form.chart.Visible)
-				{
-					Program.Form.chart.Invoke((MethodInvoker)(() =>
+
+				Program.Form.chart.Invoke((MethodInvoker)(() =>
+			   {
+				   if (Program.Form.chart.Visible)
 				   {
 					   Program.Form.chart.Series["train"].Points.AddXY(epoch, trainMse);
 					   Program.Form.chart.Series["test"].Points.AddXY(epoch, testMse);
 
 					   Program.Form.chart.Series["train"].LegendText = $"Train {trainHitRatio,2:0.##}%";
 					   Program.Form.chart.Series["test"].LegendText = $"Test {testHitRatio,2:0.##}%";
-				   }));
-				}
+				   }
+			   }));
+
 
 				// set various statuses
 				string training = epoch % 2 == 0 ? "TRAINING" : "        ";
 				Program.Form.SetStatus($"[{training}] TrainMSE {trainMse,7:0.#####} {trainHitRatio,4:0.##}% TestMSE {testMse,7:0.#####} {testHitRatio,4:0.##}% ");
-				debug(
-					$"train: epoch #{currentEpoch,-4:0} trainMse {trainMse,8:0.#####} {trainHitRatio,4:0.##}% testmse {testMse,8:0.#####} {testHitRatio,4:0.##}%");
+				debug($"train: epoch #{currentEpoch,-4:0} trainMse {trainMse,8:0.#####} {trainHitRatio,4:0.##}% testmse {testMse,8:0.#####} {testHitRatio,4:0.##}%");
 
 				Program.Form.mainProgressBar.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)trainHitRatio));
 			}
