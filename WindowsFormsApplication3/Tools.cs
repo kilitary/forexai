@@ -12,34 +12,29 @@ namespace FinancePermutator
     internal static class Tools
     {
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern void OutputDebugStringA(string message);
+        private static extern void OutputDebugStringA(string message);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern int GetCurrentProcessId();
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern int GetCurrentThreadId();
+        private static extern int GetCurrentThreadId();
 
         public static List<string> Messages = new List<string>();
         private static bool runningMessagePump;
-
-        public static int LastLogTime { get; private set; }
+        public static int LastLogTime { get; set; }
         private static StreamWriter sw = null;
         public static object writeMessagesBlock = new object();
 
         public static void WriteMessages()
         {
             if (runningMessagePump)
-            {
                 return;
-            }
 
             lock (writeMessagesBlock)
             {
                 if (Messages.Count == 0 || Program.Form.debugView == null)
-                {
                     return;
-                }
 
                 runningMessagePump = true;
 
@@ -64,6 +59,7 @@ namespace FinancePermutator
                     foreach (string msg in Messages)
                     {
                         tempItems[i++] = msg;
+
                         if (sw != null)
                             sw.WriteLine(msg);
                     }
@@ -109,9 +105,7 @@ namespace FinancePermutator
             for (int i = 1; i < input.Length; i++)
             {
                 if (input[i] != value)
-                {
                     return false;
-                }
             }
 
             return true;

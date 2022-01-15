@@ -11,17 +11,12 @@ namespace FinancePermutator
         public int ParamIndex;
         public int NumData;
         public int OutBegIdx = 0;
-
         public int Offset;
 
-        //public int[] OutInteger = new int[1000];
         //public double[] OutReal = new double[1000];
         public List<string> parametersMap;
-
         public object[] Arguments;
-
         public int OutIndex { get; }
-
         public int OutNbElement { get; }
 
         /*░░ ♡ ▄▀▀▀▄░░░
@@ -238,24 +233,21 @@ namespace FinancePermutator
 
         private void DumpArguments()
         {
+            var argIdx = 0;
+
             Tools.debug($"arguments: {Arguments.Length}");
-            int argIdx = 0;
+
             foreach (object o in Arguments)
-            {
                 if (o != null)
-                {
                     Tools.debug($" +arg{argIdx++,-2:00} {o.GetType()} {o}");
-                }
-            }
         }
 
         private static void DumpParams(MethodInfo methodInfo)
         {
-            int idx = 0;
+            var idx = 0;
+
             foreach (ParameterInfo pi in methodInfo.GetParameters())
-            {
                 Tools.debug($" prm{idx++,2:00} {pi.ParameterType} {pi.Name}");
-            }
         }
     }
 }

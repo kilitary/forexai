@@ -38,7 +38,7 @@ namespace FinancePermutator.Networks
         public string ErrStr => network.ErrStr;
         public uint BitFail => network.BitFail;
         public bool newNetwork = false;
-        public float startTemperature = Configuration.startSarTemp;
+        public float temperature = Configuration.startSarTemp;
 
         public double Test(TrainingData testData)
         {
@@ -76,7 +76,7 @@ namespace FinancePermutator.Networks
             Program.Form.AddConfiguration($" LayerActFunc o: {activationFunc}");
             network.SetActivationFunctionLayer(activationFunc, 2);
 
-            startTemperature = 50.0F;
+            temperature = 50.0F;
         }
 
         /*
@@ -146,8 +146,8 @@ namespace FinancePermutator.Networks
             {
                 case TrainingAlgorithm.TRAIN_SARPROP:
                     network.SarpropTemperature -= (float) Configuration.heatDelta;
-                    startTemperature -= Configuration.heatDelta;
-                    debug($"set temp {startTemperature}");
+                    temperature -= Configuration.heatDelta;
+                    debug($"set temp {temperature}");
                     ret = network.TrainEpochSarpropParallel(trainData, 4);
                     break;
                 case TrainingAlgorithm.TRAIN_QUICKPROP:

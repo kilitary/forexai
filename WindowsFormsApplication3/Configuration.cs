@@ -13,7 +13,7 @@ namespace FinancePermutator
         public static int MinSaveEpoch = 20;
         public static int MinTaFunctionsCount = 3;
         public static int TestDataAmountPerc = 6;
-        public static int TrainLimitEpochs = 700;
+        public static int TrainLimitEpochs = 222;
         public static uint DefaultHiddenNeurons = 0;
         public static float startSarTemp = 50.0f;
         public static float heatDelta = 0.05f;
