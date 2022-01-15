@@ -29,6 +29,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using FANNCSharp;
 using FANNCSharp.Double;
 using FinancePermutator.Generators;
+using FinancePermutator.Media;
 using FinancePermutator.Networks;
 using FinancePermutator.Prices;
 using Newtonsoft.Json;
@@ -83,7 +84,7 @@ namespace FinancePermutator.Train
 
 		public Train()
 		{
-			randomSeed = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + DateTime.Now.Millisecond;
+			randomSeed = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + DateTime.Now.Millisecond;
 			generateFunctionsThread = new Thread(GenerateTrainData);
 		}
 
@@ -109,48 +110,45 @@ namespace FinancePermutator.Train
 
 		public static int GetLastInputTime()
 		{
-			lastInPutNfo.cbSize = (uint) Marshal.SizeOf(lastInPutNfo);
+			lastInPutNfo.cbSize = (uint)Marshal.SizeOf(lastInPutNfo);
 			if (!GetLastInputInfo(ref lastInPutNfo))
 				debug($"ERROR: GetLastInputInfo: {Marshal.GetLastWin32Error()}");
 
-			return (int) lastInPutNfo.dwTime;
+			return (int)lastInPutNfo.dwTime;
 		}
 
 		public void EraseBigLabel()
 		{
-			Program.Form.debugView.Invoke((MethodInvoker) (() => { Program.Form.debugView.Invoke((MethodInvoker) (() => { Data.chartBigLabel = string.Empty; })); }));
+			Program.Form.debugView.Invoke((MethodInvoker)(() => { Program.Form.debugView.Invoke((MethodInvoker)(() => { Data.chartBigLabel = string.Empty; })); }));
 		}
 
 		public void SetBigLabel(string text = "")
 		{
-			Program.Form.debugView.Invoke((MethodInvoker) (() => { Data.chartBigLabel = text.Length > 0 ? text : $"[MUTATING DATA {Data.loadPercent,4:####}%]"; }));
+			Program.Form.debugView.Invoke((MethodInvoker)(() => { Data.chartBigLabel = text.Length > 0 ? text : $"[MUTATING DATA {Data.loadPercent,4:####}%]"; }));
 		}
 
 		/*
 
-			+------+.      +------+       +------+       +------+      .+------+
-		|`.    | `.    |\     |\      |      |      /|     /|    .' |    .'|
-		|  `+--+---+   | +----+-+     +------+     +-+----+ |   +---+--+'  |
-		|   |  |   |   | |    | |     |      |     | |    | |   |   |  |   |
-		+---+--+.  |   +-+----+ |     +------+     | +----+-+   |  .+--+---+
-		 `. |    `.|    \|     \|     |      |     |/     |/    |.'    | .'
-		   `+------+     +------+     +------+     +------+     +------+'
-		*/
+            +------+.      +------+       +------+       +------+      .+------+
+        |`.    | `.    |\     |\      |      |      /|     /|    .' |    .'|
+        |  `+--+---+   | +----+-+     +------+     +-+----+ |   +---+--+'  |
+        |   |  |   |   | |    | |     |      |     | |    | |   |   |  |   |
+        +---+--+.  |   +-+----+ |     +------+     | +----+-+   |  .+--+---+
+         `. |    `.|    \|     \|     |      |     |/     |/    |.'    | .'
+           `+------+     +------+     +------+     +------+     +------+'
+        */
 
 		public void GenerateTrainData()
 		{
 			if (!Data.TALibMethods.Any())
 				return;
 
+			if (Program.Form.debugView.Visible)
+				Program.Form.debugView.Invoke((MethodInvoker)(() => { noDelayEnabled = Program.Form.nodelayCheckbox.Checked; }));
 			do
 			{
-				again:
+			again:
 				Program.Form.ConfigurationClear();
-
-				if (Program.Form.debugView.Visible)
-				{
-					Program.Form.debugView.Invoke((MethodInvoker) (() => { noDelayEnabled = Program.Form.nodelayCheckbox.Checked; }));
-				}
 
 				threadSleepTime = 0; // GetIdleTickCount() >= Configuration.SleepCheckTime ? 0 : Configuration.SleepTime;
 
@@ -158,7 +156,7 @@ namespace FinancePermutator.Train
 
 				class1 = class2 = class0 = 0;
 				Data.FunctionConfiguration.Clear();
-				Program.Form.debugView.Invoke((MethodInvoker) (() => { Program.Form.debugView.Items.Clear(); }));
+				Program.Form.debugView.Invoke((MethodInvoker)(() => { Program.Form.debugView.Items.Clear(); }));
 
 				SetupFunctions(randomSeed);
 
@@ -179,8 +177,8 @@ namespace FinancePermutator.Train
 					{
 						Program.Form.SetStatus(
 							$"Generating train && test data [{currentOffset} - {currentOffset + selectedInputDimension}] " +
-							$"{(double) currentOffset / Data.Prices.Count * 100.0,2:0.##}% ...");
-						Program.Form.chart.Invoke((MethodInvoker) (() => Program.Form.mainProgressBar.Value = (int) ((double) currentOffset / (double) Data.Prices.Count * 100.0)));
+							$"{(double)currentOffset / Data.Prices.Count * 100.0,2:0.##}% ...");
+						Program.Form.chart.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)((double)currentOffset / (double)Data.Prices.Count * 100.0)));
 					}
 
 					combinedResult = new double[] { };
@@ -192,20 +190,20 @@ namespace FinancePermutator.Train
 
 						var functionInfo = funct.Value;
 
-						FunctionParameters functionParameters = new FunctionParameters((MethodInfo) functionInfo["methodInfo"], selectedInputDimension, currentOffset);
+						FunctionParameters functionParameters = new FunctionParameters((MethodInfo)functionInfo["methodInfo"], selectedInputDimension, currentOffset);
 
 						// execute function
-						var function = new Function((MethodInfo) functionInfo["methodInfo"]);
+						var function = new Function((MethodInfo)functionInfo["methodInfo"]);
 						result = function.Execute(functionParameters, out var code);
 
 						// check function output
 						if (result == null || result.Length <= 1 || double.IsNegativeInfinity(result[0]) || double.IsPositiveInfinity(result[0]) ||
-							double.IsNaN(result[0]) || double.IsInfinity(result[0]) || IsArrayRepeating(result))
+						   double.IsNaN(result[0]) || double.IsInfinity(result[0]) || IsArrayRepeating(result))
 						{
-							debug($"WARNING: skip {((MethodInfo) functionInfo["methodInfo"]).Name} due to bad output [len={result?.Length}, code={code}]");
-							Program.Form.SetStatus($"ERROR: bad output for {((MethodInfo) functionInfo["methodInfo"]).Name}");
+							debug($"WARNING: skip {((MethodInfo)functionInfo["methodInfo"]).Name} due to bad output [len={result?.Length}, code={code}]");
+							Program.Form.SetStatus($"ERROR: bad output for {((MethodInfo)functionInfo["methodInfo"]).Name}");
 							numberOfBrokenData++;
-							Program.Form.chart.Invoke((MethodInvoker) (() => Program.Form.mainProgressBar.Value = 0));
+							Program.Form.chart.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = 0));
 							goto again;
 						}
 
@@ -244,21 +242,21 @@ namespace FinancePermutator.Train
 		}
 
 		/*
-			／ イ(((ヽ
-			(ﾉ ￣Ｙ＼
-			|　(＼　(. /) ｜ )
-			ヽ ヽ` ( ͡° ͜ʖ ͡°) _ノ /
-			＼ |　⌒Ｙ⌒　/ /
-			｜ヽ　 ｜　 ﾉ ／
-			＼トー仝ーイ
-			｜ ミ土彡/
-			)\ ° /
-			( \ /
-			/ / ѼΞΞΞΞΞΞΞD
-			/ / / \ \ \
-			(( ). ) ).)
-			( ). ( | |
-			| / \ |*/
+            ／ イ(((ヽ
+            (ﾉ ￣Ｙ＼
+            |　(＼　(. /) ｜ )
+            ヽ ヽ` ( ͡° ͜ʖ ͡°) _ノ /
+            ＼ |　⌒Ｙ⌒　/ /
+            ｜ヽ　 ｜　 ﾉ ／
+            ＼トー仝ーイ
+            ｜ ミ土彡/
+            )\ ° /
+            ( \ /
+            / / ѼΞΞΞΞΞΞΞD
+            / / / \ \ \
+            (( ). ) ).)
+            ( ). ( | |
+            | / \ |*/
 
 		private void SetupFunctions(int randomSeedLocal)
 		{
@@ -277,7 +275,7 @@ namespace FinancePermutator.Train
 				SetStats();
 				Program.Form.SetBigLabel($"[SETUP FUNCTION #{i}]");
 
-				int unixTimestamp = (int) DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + DateTime.Now.Millisecond;
+				int unixTimestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + DateTime.Now.Millisecond;
 
 				// get random method
 				var selectedMethosdInfo = Methods.GetRandomMethod(unixTimestamp);
@@ -302,7 +300,7 @@ namespace FinancePermutator.Train
 				result = function.Execute(functionParameters, out var code);
 
 				if (result == null || result.Length <= 1 || double.IsNegativeInfinity(result[0]) || double.IsPositiveInfinity(result[0]) ||
-					double.IsNaN(result[0]) || double.IsInfinity(result[0]) || IsArrayRepeating(result))
+				   double.IsNaN(result[0]) || double.IsInfinity(result[0]) || IsArrayRepeating(result))
 				{
 					DumpValues(selectedMethosdInfo, result);
 					debug(
@@ -330,23 +328,23 @@ namespace FinancePermutator.Train
 			foreach (var func in Data.FunctionConfiguration)
 				functions.Append($"[{func.Key}] ");
 
-			Program.Form.funcListLabel.Invoke((MethodInvoker) (() => { Program.Form.funcListLabel.Text = functions.ToString(); }));
+			Program.Form.funcListLabel.Invoke((MethodInvoker)(() => { Program.Form.funcListLabel.Text = functions.ToString(); }));
 
 			//debug($"{JsonConvert.SerializeObject(Data.FunctionBase, Formatting.Indented)}");
 			//Thread.Sleep(500000);
 		}
 
 		/*		_______________________________________________________
-				  |                                                      |
-			   /    |                                                      |
-			  /---, |                                                      |
-			 -----# ==| |                                                      |
-			 | :) # ==| |                                                      |
-		  -----'----#   | |______________________________________________________|
-		  |)___()  '#   |______====____   \___________________________________|
-		 [_/,-,\"--"------ //,-,  ,-,\\\   |/             //,-,  ,-,  ,-,\\ __#
-		   ( 0 )|===******||( 0 )( 0 )||-  o              '( 0 )( 0 )( 0 )||
-	----'-'--------------'-'--'-'-----------------------'-'--'-'--'-'--------------*/
+                  |                                                      |
+               /    |                                                      |
+              /---, |                                                      |
+             -----# ==| |                                                      |
+             | :) # ==| |                                                      |
+          -----'----#   | |______________________________________________________|
+          |)___()  '#   |______====____   \___________________________________|
+         [_/,-,\"--"------ //,-,  ,-,\\\   |/             //,-,  ,-,  ,-,\\ __#
+           ( 0 )|===******||( 0 )( 0 )||-  o              '( 0 )( 0 )( 0 )||
+    ----'-'--------------'-'--'-'-----------------------'-'--'-'--'-'--------------*/
 
 		public double CalculateHitRatio(Network net, double[][] inputs, double[][] desiredOutputs)
 		{
@@ -372,7 +370,7 @@ namespace FinancePermutator.Train
 				curX++;
 			}
 
-			return ((double) hits / (double) inputs.Length) * 100.0;
+			return ((double)hits / (double)inputs.Length) * 100.0;
 		}
 
 		private bool AssertInputDataIsCorrect(ref double[][] inputSetsLocal, ref double[][] outputSetsLocal)
@@ -483,7 +481,7 @@ namespace FinancePermutator.Train
 				trainData.ScaleTrainData(-1.0, 1.0);
 
 				testData = new TrainingData(trainData);
-				testDataOffset = trainData.TrainDataLength / (uint) Configuration.TestDataAmountPerc;
+				testDataOffset = trainData.TrainDataLength / (uint)Configuration.TestDataAmountPerc;
 				testData.SubsetTrainData(0, testDataOffset);
 				testData.SaveTrain($@"{GetTempPath()}\testdata.dat");
 				testSetInput = testData.Input;
@@ -504,40 +502,40 @@ namespace FinancePermutator.Train
 
 		private void InitChart()
 		{
-			Program.Form.chart.Invoke((MethodInvoker) (() =>
-			{
-				Program.Form.EraseBigLabel();
+			Program.Form.chart.Invoke((MethodInvoker)(() =>
+		   {
+			   Program.Form.EraseBigLabel();
 
-				Program.Form.chart.Series.Clear();
-				Program.Form.chart.Series.Add("train");
-				Program.Form.chart.Series.Add("test");
+			   Program.Form.chart.Series.Clear();
+			   Program.Form.chart.Series.Add("train");
+			   Program.Form.chart.Series.Add("test");
 
-				Program.Form.chart.Series["train"].ChartType = SeriesChartType.Line;
-				Program.Form.chart.Series["test"].ChartType = SeriesChartType.FastLine;
+			   Program.Form.chart.Series["train"].ChartType = SeriesChartType.Line;
+			   Program.Form.chart.Series["test"].ChartType = SeriesChartType.FastLine;
 
-				Program.Form.chart.Series["train"].BorderWidth = 1;
-				Program.Form.chart.Series["test"].BorderWidth = 1;
+			   Program.Form.chart.Series["train"].BorderWidth = 1;
+			   Program.Form.chart.Series["test"].BorderWidth = 1;
 
-				Program.Form.chart.Series["train"].Color = Color.Green;
-				Program.Form.chart.Series["test"].Color = Color.Blue;
+			   Program.Form.chart.Series["train"].Color = Color.Green;
+			   Program.Form.chart.Series["test"].Color = Color.Blue;
 
-				Program.Form.chart.ChartAreas[0].AxisX.LineColor = Color.White;
-				Program.Form.chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
-				Program.Form.chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+			   Program.Form.chart.ChartAreas[0].AxisX.LineColor = Color.White;
+			   Program.Form.chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+			   Program.Form.chart.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
 
-				Program.Form.chart.ChartAreas[0].AxisY.LineColor = Color.White;
-				Program.Form.chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
-				Program.Form.chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+			   Program.Form.chart.ChartAreas[0].AxisY.LineColor = Color.White;
+			   Program.Form.chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+			   Program.Form.chart.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
 
-				Program.Form.chart.ChartAreas[0].AxisY.Interval = 0.1;
-				/*Program.Form.chart.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-				Program.Form.chart.ChartAreas[0].AxisX.Interval = 1;
-				Program.Form.chart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-				Program.Form.chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-				Program.Form.chart.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
-				Program.Form.chart.ChartAreas[0].AxisY.MajorTickMark.Enabled = false;*/
-				Program.Form.chart.ChartAreas[0].AxisX.MajorTickMark.IntervalOffset = 0.3;
-			}));
+			   Program.Form.chart.ChartAreas[0].AxisY.Interval = 0.1;
+			   /*Program.Form.chart.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
+			   Program.Form.chart.ChartAreas[0].AxisX.Interval = 1;
+			   Program.Form.chart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+			   Program.Form.chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+			   Program.Form.chart.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
+			   Program.Form.chart.ChartAreas[0].AxisY.MajorTickMark.Enabled = false;*/
+			   Program.Form.chart.ChartAreas[0].AxisX.MajorTickMark.IntervalOffset = 0.3;
+		   }));
 		}
 
 		private void CreateNetwork()
@@ -582,21 +580,21 @@ namespace FinancePermutator.Train
 		}
 
 		/*			 *
-		░░ ♡ ▄▀▀▀▄░░░
-		▄███▀░◐░░░▌░░░░░░░
-		░░░░▌░░░░░▐░░░░░░░
-		░░░░▐░░░░░▐░░░░░░░
-		░░░░▌░░░░░▐▄▄░░░░░
-		░░░░▌░░░░▄▀▒▒▀▀▀▀▄
-		░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
-		░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
-		░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
-		░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
-		░░░░░░░░░░░▌▌░▌▌░░░░░
-		░░░░░░░░░░░▌▌░▌▌░░░░░
-		░░░░░░░░░▄▄▌▌▄▌▌░░░░░
-		-----------
-		*/
+        ░░ ♡ ▄▀▀▀▄░░░
+        ▄███▀░◐░░░▌░░░░░░░
+        ░░░░▌░░░░░▐░░░░░░░
+        ░░░░▐░░░░░▐░░░░░░░
+        ░░░░▌░░░░░▐▄▄░░░░░
+        ░░░░▌░░░░▄▀▒▒▀▀▀▀▄
+        ░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
+        ░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
+        ░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
+        ░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
+        ░░░░░░░░░░░▌▌░▌▌░░░░░
+        ░░░░░░░░░░░▌▌░▌▌░░░░░
+        ░░░░░░░░░▄▄▌▌▄▌▌░░░░░
+        -----------
+        */
 
 		public static void SetStats()
 		{
@@ -642,6 +640,8 @@ namespace FinancePermutator.Train
 
 			if (network == null)
 				return -1;
+
+			var foted = false;
 
 			debug($"starting train on network #{networksProcessed} id: 0x{network.GetHashCode():X}");
 			saveTestHitRatio = 0;
@@ -697,25 +697,30 @@ namespace FinancePermutator.Train
 
 				// save network if hit ratio reached
 				if ((testMse <= Configuration.MinSaveTestMSE || testHitRatio >= Configuration.MinSaveHit) && currentEpoch > Configuration.MinSaveEpoch &&
-					saveTestHitRatio < testHitRatio)
+				   saveTestHitRatio < testHitRatio)
 				{
 					saveTestHitRatio = testHitRatio;
 					network.SaveNetwork();
 					networksSuccess++;
+					if (!foted)
+					{
+						Audio.playFoto();
+						foted = true;
+					}
 				}
 
 				// draw graphics
 				var epoch = currentEpoch;
 				if (Program.Form.chart.Visible)
 				{
-					Program.Form.chart.Invoke((MethodInvoker) (() =>
-					{
-						Program.Form.chart.Series["train"].Points.AddXY(epoch, trainMse);
-						Program.Form.chart.Series["test"].Points.AddXY(epoch, testMse);
+					Program.Form.chart.Invoke((MethodInvoker)(() =>
+				   {
+					   Program.Form.chart.Series["train"].Points.AddXY(epoch, trainMse);
+					   Program.Form.chart.Series["test"].Points.AddXY(epoch, testMse);
 
-						Program.Form.chart.Series["train"].LegendText = $"Train {trainHitRatio,2:0.##}%";
-						Program.Form.chart.Series["test"].LegendText = $"Test {testHitRatio,2:0.##}%";
-					}));
+					   Program.Form.chart.Series["train"].LegendText = $"Train {trainHitRatio,2:0.##}%";
+					   Program.Form.chart.Series["test"].LegendText = $"Test {testHitRatio,2:0.##}%";
+				   }));
 				}
 
 				// set various statuses
@@ -724,7 +729,7 @@ namespace FinancePermutator.Train
 				debug(
 					$"train: epoch #{currentEpoch,-4:0} trainMse {trainMse,8:0.#####} {trainHitRatio,4:0.##}% testmse {testMse,8:0.#####} {testHitRatio,4:0.##}%");
 
-				Program.Form.mainProgressBar.Invoke((MethodInvoker) (() => Program.Form.mainProgressBar.Value = (int) trainHitRatio));
+				Program.Form.mainProgressBar.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)trainHitRatio));
 			}
 
 			var output = network.Run(inputSetsLocal[0]);
@@ -746,14 +751,14 @@ namespace FinancePermutator.Train
 			double diffSize = 0.00133;
 
 			if (priceHigh[inputDimensionLocal - (priceHigh.Length > Configuration.OutputIndex ? Configuration.OutputIndex : priceHigh.Length - 1)] -
-				priceLow[inputDimensionLocal - 1] > diffSize)
+			   priceLow[inputDimensionLocal - 1] > diffSize)
 			{
 				outputSets[numRecordLocal][0] = 1;
 				outputSets[numRecordLocal][1] = -1;
 				class1++;
 			}
 			else if (priceHigh[inputDimensionLocal - (priceHigh.Length > Configuration.OutputIndex ? Configuration.OutputIndex : priceHigh.Length - 1)] -
-					 priceLow[inputDimensionLocal - 1] < diffSize)
+					priceLow[inputDimensionLocal - 1] < diffSize)
 			{
 				outputSets[numRecordLocal][0] = -1;
 				outputSets[numRecordLocal][1] = 1;
