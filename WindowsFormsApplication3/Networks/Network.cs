@@ -27,13 +27,13 @@ namespace FinancePermutator.Networks
 {
 	internal class Network
 	{
-		private NeuralNet network;
+		private readonly NeuralNet network;
 		public float MSE => network.MSE;
 		public uint ErrNo => network.ErrNo;
 		public string ErrStr => network.ErrStr;
 		public uint BitFail => network.BitFail;
 		public bool newNetwork = false;
-		public float temperature = Configuration.startSarTemp;
+		private float temperature = Configuration.startSarTemp;
 
 		public double Test(TrainingData testData)
 		{
@@ -141,10 +141,10 @@ namespace FinancePermutator.Networks
 			switch (network.TrainingAlgorithm)
 			{
 				case TrainingAlgorithm.TRAIN_SARPROP:
-					network.SarpropTemperature *= (Configuration.heatDelta);
-					temperature *= (Configuration.heatDelta);
-
+					//temperature = (float)(network.SarpropTemperature = (float)temperature / (1.0f + (float)Configuration.heatDelta * (float)temperature));
+					network.SarpropTemperature = (temperature *= (float)Configuration.heatDelta);
 					debug($"set temp {temperature}");
+					//  self.currTemp = self.currTemp / (1 + self.beta * self.currTemp)
 
 					Program.Form.chart.Invoke((MethodInvoker)(() =>
 					{
@@ -187,6 +187,8 @@ namespace FinancePermutator.Networks
 		internal void SetupScaling(TrainingData trainData)
 		{
 			network.SetScalingParams(trainData, -1.0f, 1.0f, -1.0f, 1.0f);
+
+			network.RandomizeWeights(-1.0f, 1.0f);
 		}
 	}
 }
