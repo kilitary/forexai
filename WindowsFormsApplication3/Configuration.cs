@@ -19,6 +19,7 @@ namespace FinancePermutator
         public static float heatDelta = 0.04f;
         public static int SleepTime = 300;
         public static int SleepCheckTime = 10000;
+		public static string path = @"F:\projects\forexai\WindowsFormsApplication3\";
         public static int OutputIndex = 15;
         public static TrainingAlgorithm TrainAlgo = TrainingAlgorithm.TRAIN_SARPROP; //TRAIN_QUICKPROP
     }

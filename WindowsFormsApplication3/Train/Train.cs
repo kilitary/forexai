@@ -15,10 +15,15 @@
 	 |      ||         ~~~~~~~~       ||      |
 	  \_____/                          \_____/*/
 
+using FANNCSharp;
+using FANNCSharp.Double;
+using FinancePermutator.Generators;
+using FinancePermutator.Media;
+using FinancePermutator.Networks;
+using FinancePermutator.Prices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -26,39 +31,32 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using FANNCSharp;
-using FANNCSharp.Double;
-using FinancePermutator.Generators;
-using FinancePermutator.Media;
-using FinancePermutator.Networks;
-using FinancePermutator.Prices;
-using Newtonsoft.Json;
 using static FinancePermutator.Tools;
 
 namespace FinancePermutator.Train
 {
-	class Train
+	internal class Train
 	{
 		public static int networksProcessed = 0;
 		public static int networksBad = 0;
 		public static int numberOfFailedFunctions = 0;
-		double saveTestHitRatio = 0;
+		private double saveTestHitRatio = 0;
 		public static int numberOfBrokenData = 0;
-		static int selectedInputDimension = Configuration.maxInputDimension;
-		static double[][] inputSets = new double[1][];
-		static double[][] outputSets = new double[1][];
+		private static int selectedInputDimension = Configuration.maxInputDimension;
+		private static double[][] inputSets = new double[1][];
+		private static double[][] outputSets = new double[1][];
 		private static double[][] testSetOutput;
 		private static double[][] testSetInput;
 		private static double[][] trainSetOutput;
 		private static double[][] trainSetInput;
 		public static int networksSuccess = 0;
-		TrainingData trainData;
-		TrainingData testData;
-		uint testDataOffset;
-		static double[] combinedResult;
-		static double[] result;
-		static int numRecord;
-		static int prevOffset;
+		private TrainingData trainData;
+		private TrainingData testData;
+		private uint testDataOffset;
+		private static double[] combinedResult;
+		private static double[] result;
+		private static int numRecord;
+		private static int prevOffset;
 		public bool runScan = true;
 		public static int class1;
 		public static int class2;
@@ -68,10 +66,10 @@ namespace FinancePermutator.Train
 		private readonly int randomSeed = 0;
 		private static LASTINPUTINFO lastInPutNfo;
 		public static int threadSleepTime;
-		double testHitRatio = 0.0, trainHitRatio = 0.0;
-		double testMse = 0;
-		double trainMse = 0;
-		bool noDelayEnabled;
+		private double testHitRatio = 0.0, trainHitRatio = 0.0;
+		private double testMse = 0;
+		private double trainMse = 0;
+		private bool noDelayEnabled;
 
 		[DllImport("User32.dll")]
 		private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
@@ -112,7 +110,9 @@ namespace FinancePermutator.Train
 		{
 			lastInPutNfo.cbSize = (uint)Marshal.SizeOf(lastInPutNfo);
 			if (!GetLastInputInfo(ref lastInPutNfo))
+			{
 				debug($"ERROR: GetLastInputInfo: {Marshal.GetLastWin32Error()}");
+			}
 
 			return (int)lastInPutNfo.dwTime;
 		}
@@ -141,10 +141,15 @@ namespace FinancePermutator.Train
 		public void GenerateTrainData()
 		{
 			if (!Data.TALibMethods.Any())
+			{
 				return;
+			}
 
 			if (Program.Form.debugView.Visible)
+			{
 				Program.Form.debugView.Invoke((MethodInvoker)(() => { noDelayEnabled = Program.Form.nodelayCheckbox.Checked; }));
+			}
+
 			do
 			{
 			again:
@@ -178,23 +183,25 @@ namespace FinancePermutator.Train
 						Program.Form.SetStatus(
 							$"Generating train && test data [{currentOffset} - {currentOffset + selectedInputDimension}] " +
 							$"{(double)currentOffset / Data.Prices.Count * 100.0,2:0.##}% ...");
-						Program.Form.chart.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)((double)currentOffset / (double)Data.Prices.Count * 100.0)));
+						Program.Form.chart.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)(currentOffset / (double)Data.Prices.Count * 100.0)));
 					}
 
 					combinedResult = new double[] { };
 
-					foreach (var funct in Data.FunctionConfiguration)
+					foreach (KeyValuePair<string, Dictionary<string, object>> funct in Data.FunctionConfiguration)
 					{
 						if (noDelayEnabled == false)
+						{
 							Thread.Sleep(1);
+						}
 
-						var functionInfo = funct.Value;
+						Dictionary<string, object> functionInfo = funct.Value;
 
 						FunctionParameters functionParameters = new FunctionParameters((MethodInfo)functionInfo["methodInfo"], selectedInputDimension, currentOffset);
 
 						// execute function
-						var function = new Function((MethodInfo)functionInfo["methodInfo"]);
-						result = function.Execute(functionParameters, out var code);
+						Function function = new Function((MethodInfo)functionInfo["methodInfo"]);
+						result = function.Execute(functionParameters, out TicTacTec.TA.Library.Core.RetCode code);
 
 						// check function output
 						if (result == null || result.Length <= 1 || double.IsNegativeInfinity(result[0]) || double.IsPositiveInfinity(result[0]) ||
@@ -209,7 +216,9 @@ namespace FinancePermutator.Train
 
 						// copy new output to all data
 						if (combinedResult != null)
+						{
 							prevOffset = combinedResult.Length;
+						}
 
 						Array.Resize(ref combinedResult, (combinedResult?.Length ?? 0) + result.Length);
 						Array.Copy(result, 0, combinedResult, prevOffset, result.Length);
@@ -223,8 +232,10 @@ namespace FinancePermutator.Train
 					outputSets[numRecord] = new double[2];
 
 					if (numRecord % 245 == 0)
+					{
 						debug(
 							$"offset: {currentOffset} numRecord:{numRecord} inputSets:{inputSets.Length} outputSets:{outputSets.Length} combinedResult:{combinedResult.Length}");
+					}
 
 					Array.Copy(combinedResult, inputSets[numRecord], combinedResult.Length);
 
@@ -278,7 +289,7 @@ namespace FinancePermutator.Train
 				int unixTimestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + DateTime.Now.Millisecond;
 
 				// get random method
-				var selectedMethosdInfo = Methods.GetRandomMethod(unixTimestamp);
+				MethodInfo selectedMethosdInfo = Methods.GetRandomMethod(unixTimestamp);
 
 				Program.Form.SetStatus($"Setup function #{i} <{selectedMethosdInfo.Name}> ...");
 				debug($"Selected function #{i}: {selectedMethosdInfo.Name} unixTimestamp: {unixTimestamp}");
@@ -287,7 +298,10 @@ namespace FinancePermutator.Train
 				{
 					debug($"function {selectedMethosdInfo.Name} already exist");
 					if (i > 0)
+					{
 						i--;
+					}
+
 					numberOfFailedFunctions++;
 					continue;
 				}
@@ -296,8 +310,8 @@ namespace FinancePermutator.Train
 				FunctionParameters functionParameters = new FunctionParameters(selectedMethosdInfo, selectedInputDimension, 0);
 
 				// execute function
-				var function = new FinancePermutator.Function(selectedMethosdInfo);
-				result = function.Execute(functionParameters, out var code);
+				Function function = new FinancePermutator.Function(selectedMethosdInfo);
+				result = function.Execute(functionParameters, out TicTacTec.TA.Library.Core.RetCode code);
 
 				if (result == null || result.Length <= 1 || double.IsNegativeInfinity(result[0]) || double.IsPositiveInfinity(result[0]) ||
 				   double.IsNaN(result[0]) || double.IsInfinity(result[0]) || IsArrayRepeating(result))
@@ -306,8 +320,12 @@ namespace FinancePermutator.Train
 					debug(
 						$"WARNING: skip {selectedMethosdInfo.Name} due to bad output [len={result.Length}, code={code} InputDimension={selectedInputDimension}], need {Configuration.MinTaFunctionsCount - i}");
 					if (i > 0)
+					{
 						i--;
+					}
+
 					numberOfFailedFunctions++;
+					//Audio.playCancel();
 					continue;
 				}
 
@@ -323,10 +341,12 @@ namespace FinancePermutator.Train
 				randomSeedLocal = unixTimestamp + XRandom.next(255);
 			}
 
-			var functions = new StringBuilder();
+			StringBuilder functions = new StringBuilder();
 
-			foreach (var func in Data.FunctionConfiguration)
+			foreach (KeyValuePair<string, Dictionary<string, object>> func in Data.FunctionConfiguration)
+			{
 				functions.Append($"[{func.Key}] ");
+			}
 
 			Program.Form.funcListLabel.Invoke((MethodInvoker)(() => { Program.Form.funcListLabel.Text = functions.ToString(); }));
 
@@ -351,26 +371,37 @@ namespace FinancePermutator.Train
 			int hits = 0, curX = 0;
 			foreach (double[] input in inputs)
 			{
-				var output = net.Run(input);
+				double[] output = net.Run(input);
 
 				double output0 = 0;
 				if (output[0] >= 0.0)
+				{
 					output0 = 1.0;
+				}
 				else if (output[0] < -0.0)
+				{
 					output0 = -1.0;
+				}
 
 				double output1 = 0;
 				if (output[1] >= 0.0)
+				{
 					output1 = 1.0;
+				}
 				else if (output[1] < -0.0)
+				{
 					output1 = -1.0;
+				}
 
 				if (output0 == desiredOutputs[curX][0] && output1 == desiredOutputs[curX][1])
+				{
 					hits++;
+				}
+
 				curX++;
 			}
 
-			return ((double)hits / (double)inputs.Length) * 100.0;
+			return (hits / (double)inputs.Length) * 100.0;
 		}
 
 		private bool AssertInputDataIsCorrect(ref double[][] inputSetsLocal, ref double[][] outputSetsLocal)
@@ -389,7 +420,9 @@ namespace FinancePermutator.Train
 				int setLength = set.Length;
 
 				if (firstValue == 0)
+				{
 					firstValue = setLength;
+				}
 
 				if (setLength != firstValue)
 				{
@@ -398,23 +431,27 @@ namespace FinancePermutator.Train
 				}
 			}
 
-			for (var i = 0; i < inputSetsLocal.Length; i++)
+			for (int i = 0; i < inputSetsLocal.Length; i++)
+			{
 				if (inputSetsLocal[i] == null || inputSetsLocal[i].Length == 0)
 				{
 					debug($"ERROR: input {i} is NULL! (Length:{inputSetsLocal.Length})");
 					return false;
 				}
+			}
 
-			for (var i = 0; i < outputSetsLocal.Length; i++)
+			for (int i = 0; i < outputSetsLocal.Length; i++)
+			{
 				if (outputSetsLocal[i] == null || outputSetsLocal[i].Length == 0)
 				{
 					debug($"ERROR: output {i} is NULL! (Length:{outputSetsLocal.Length})");
 					return false;
 				}
+			}
 
 			// check input
 			int j = 0, k = 0;
-			foreach (var set in inputSetsLocal)
+			foreach (double[] set in inputSetsLocal)
 			{
 				if (set == null)
 				{
@@ -422,7 +459,7 @@ namespace FinancePermutator.Train
 					return false;
 				}
 
-				foreach (var cell in set)
+				foreach (double cell in set)
 				{
 					if (double.IsPositiveInfinity(cell) || double.IsNegativeInfinity(cell) || double.IsInfinity(cell) || double.IsNaN(cell))
 					{
@@ -439,7 +476,7 @@ namespace FinancePermutator.Train
 
 			// check output
 			j = k = 0;
-			foreach (var set in outputSetsLocal)
+			foreach (double[] set in outputSetsLocal)
 			{
 				if (set == null)
 				{
@@ -447,7 +484,7 @@ namespace FinancePermutator.Train
 					return false;
 				}
 
-				foreach (var cell in set)
+				foreach (double cell in set)
 				{
 					if (double.IsPositiveInfinity(cell) || double.IsNegativeInfinity(cell) || double.IsInfinity(cell) || double.IsNaN(cell))
 					{
@@ -541,10 +578,12 @@ namespace FinancePermutator.Train
 		private void CreateNetwork()
 		{
 			if (trainData == null)
+			{
 				return;
+			}
 
 			// create network to hold all input data
-			var inputCount = trainData.InputCount;
+			uint inputCount = trainData.InputCount;
 			uint numNeurons = Configuration.DefaultHiddenNeurons > 0 ? Configuration.DefaultHiddenNeurons : inputCount / 2 - 1;
 			debug($"new network: numinputs: {inputCount} neurons: {numNeurons}");
 
@@ -552,7 +591,7 @@ namespace FinancePermutator.Train
 
 			NetworkType layer = NetworkType.SHORTCUT;
 
-			var algo = Configuration.TrainAlgo;
+			TrainingAlgorithm algo = Configuration.TrainAlgo;
 			switch (Program.Form.listTrain.SelectedIndex)
 			{
 				case 0:
@@ -619,9 +658,11 @@ namespace FinancePermutator.Train
 			CreateTrainAndTestData(inputSetsLocal, outputSetsLocal);
 
 			if (inputSetsLocal != null && outputSetsLocal != null && trainData != null)
+			{
 				Program.Form.AddConfiguration(
 					$"\r\nInfo:\r\n inputSets: {inputSetsLocal.Length}\r\n Train: {trainData.TrainDataLength - testDataOffset} Test: {testDataOffset}\r\n" +
 					$" class1: {class1} class2: {class2} class0: {class0}");
+			}
 
 			debug($"class1: {class1} class2: {class2} class0: {class0}");
 			InitChart();
@@ -636,17 +677,23 @@ namespace FinancePermutator.Train
 		private int TrainNetwork(ref double[][] inputSetsLocal, ref double[][] outputSetsLocal)
 		{
 			if (PrepareNetwork(ref inputSetsLocal, ref outputSetsLocal) == -1)
+			{
 				return -1;
+			}
 
 			if (network == null)
+			{
 				return -1;
+			}
 
-			var foted = false;
+			Audio.playStart();
+
+			bool foted = false;
 
 			debug($"starting train on network #{networksProcessed} id: 0x{network.GetHashCode():X}");
 			saveTestHitRatio = 0;
 
-			for (var currentEpoch = 0; runScan && inputSetsLocal != null && outputSetsLocal != null; currentEpoch++)
+			for (int currentEpoch = 0; runScan && inputSetsLocal != null && outputSetsLocal != null; currentEpoch++)
 			{
 				// stop if max epoch reached
 				if (currentEpoch >= Configuration.TrainLimitEpochs)
@@ -684,12 +731,16 @@ namespace FinancePermutator.Train
 				// DO TRAIN
 				trainMse = network.Train(trainData);
 				if (network.ErrNo > 0)
+				{
 					debug($"train: epoch #{currentEpoch,-4:0} error Train {network.ErrNo}: {network.ErrStr}");
+				}
 
 				// DO TEST
 				testMse = network.Test(testData);
 				if (network.ErrNo > 0)
+				{
 					debug($"train: epoch #{currentEpoch,-4:0} error Test {network.ErrNo}: {network.ErrStr}");
+				}
 
 				// Calcuate hit ratio in percentage
 				testHitRatio = CalculateHitRatio(network, testSetInput, testSetOutput);
@@ -710,7 +761,7 @@ namespace FinancePermutator.Train
 				}
 
 				// draw graphics
-				var epoch = currentEpoch;
+				int epoch = currentEpoch;
 				if (Program.Form.chart.Visible)
 				{
 					Program.Form.chart.Invoke((MethodInvoker)(() =>
@@ -732,7 +783,7 @@ namespace FinancePermutator.Train
 				Program.Form.mainProgressBar.Invoke((MethodInvoker)(() => Program.Form.mainProgressBar.Value = (int)trainHitRatio));
 			}
 
-			var output = network.Run(inputSetsLocal[0]);
+			double[] output = network.Run(inputSetsLocal[0]);
 			testMse = network.Test(testData);
 			debug($"trained mse {trainMse} testmse {testMse} 0:should={outputSetsLocal[0][0]}");
 			debug($"is={output[0]} should={outputSetsLocal[0][1]} is={output[1]} ");
