@@ -143,7 +143,7 @@ namespace FinancePermutator.Networks
 				case TrainingAlgorithm.TRAIN_SARPROP:
 					//temperature = (float)(network.SarpropTemperature = (float)temperature / (1.0f + (float)Configuration.heatDelta * (float)temperature));
 					network.SarpropTemperature = (temperature *= (float)Configuration.heatDelta);
-					debug($"set temp {temperature}");
+					//debug($"set temp {temperature}");
 					//  self.currTemp = self.currTemp / (1 + self.beta * self.currTemp)
 
 					Program.Form.chart.Invoke((MethodInvoker)(() =>
@@ -151,15 +151,15 @@ namespace FinancePermutator.Networks
 						Program.Form.label3.Text = $"t⁰ {(float)temperature}";
 					}));
 
-					ret = network.TrainEpochSarpropParallel(trainData, 4);
+					ret = network.TrainEpochSarpropParallel(trainData, 2);
 					break;
 
 				case TrainingAlgorithm.TRAIN_QUICKPROP:
-					ret = network.TrainEpochQuickpropParallel(trainData, 4);
+					ret = network.TrainEpochQuickpropParallel(trainData, 2);
 					break;
 
 				case TrainingAlgorithm.TRAIN_RPROP:
-					ret = network.TrainEpochIrpropmParallel(trainData, 4);
+					ret = network.TrainEpochIrpropmParallel(trainData, 2);
 					break;
 			}
 

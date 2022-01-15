@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace FinancePermutator.Generators
 {
@@ -16,6 +17,13 @@ namespace FinancePermutator.Generators
 		public static int Next(int n)
 		{
 			return Between(0, n);
+		}
+
+		public static float NextFloat(float max)
+		{
+			random = new Random(DateTime.Now.Millisecond);
+			float randomFloat = (float)random.NextDouble() % max;
+			return randomFloat;
 		}
 
 		public static int Next(int n, int m)

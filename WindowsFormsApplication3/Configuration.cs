@@ -7,7 +7,7 @@ namespace FinancePermutator
 		public static string PriceFileName = @"c:\forexAI\GBPUSD5.csv";
 		public static string LogFileName = @"c:\forexAI\forexAI.log";
 		public static string TempPath = "%TEMP%";
-		public static int maxInputDimension = 255;
+		public static int maxInputDimension = 128;
 		public static float MinSaveTestMSE = 0.01f;
 		public static float MinSaveHit = 80f;
 		public static int MinSaveEpoch = 60;

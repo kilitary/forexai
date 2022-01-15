@@ -35,11 +35,11 @@
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			System.Windows.Forms.DataVisualization.Charting.LineAnnotation lineAnnotation9 = new System.Windows.Forms.DataVisualization.Charting.LineAnnotation();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Title title9 = new System.Windows.Forms.DataVisualization.Charting.Title();
+			System.Windows.Forms.DataVisualization.Charting.LineAnnotation lineAnnotation2 = new System.Windows.Forms.DataVisualization.Charting.LineAnnotation();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
 			this.loadPricesButton = new System.Windows.Forms.Button();
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.showValues = new System.Windows.Forms.CheckBox();
@@ -64,12 +64,14 @@
 			this.mainProgressBar = new System.Windows.Forms.ProgressBar();
 			this.listTrain = new System.Windows.Forms.ListBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
 			this.tabPage2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// loadPricesButton
@@ -87,7 +89,7 @@
 			this.loadPricesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.loadPricesButton.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.loadPricesButton.ForeColor = System.Drawing.Color.Navy;
-			this.loadPricesButton.Location = new System.Drawing.Point(611, 29);
+			this.loadPricesButton.Location = new System.Drawing.Point(723, 28);
 			this.loadPricesButton.Margin = new System.Windows.Forms.Padding(7);
 			this.loadPricesButton.Name = "loadPricesButton";
 			this.loadPricesButton.Size = new System.Drawing.Size(103, 30);
@@ -137,7 +139,7 @@
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.Padding = new System.Drawing.Point(9, 3);
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(609, 464);
+			this.tabControl1.Size = new System.Drawing.Size(720, 464);
 			this.tabControl1.TabIndex = 2;
 			// 
 			// tabPage1
@@ -149,14 +151,14 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 25);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(601, 435);
+			this.tabPage1.Size = new System.Drawing.Size(712, 435);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Preload";
 			// 
 			// chart
 			// 
-			lineAnnotation9.Name = "LineAnnotation1";
-			this.chart.Annotations.Add(lineAnnotation9);
+			lineAnnotation2.Name = "LineAnnotation1";
+			this.chart.Annotations.Add(lineAnnotation2);
 			this.chart.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Graphics;
 			this.chart.BackColor = System.Drawing.Color.Ivory;
 			this.chart.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.Center;
@@ -178,45 +180,45 @@
 			this.chart.BorderSkin.BorderWidth = 3;
 			this.chart.BorderSkin.PageColor = System.Drawing.Color.Turquoise;
 			this.chart.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.Emboss;
-			chartArea9.Area3DStyle.IsRightAngleAxes = false;
-			chartArea9.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
-			chartArea9.Area3DStyle.WallWidth = 0;
-			chartArea9.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
-			chartArea9.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-			chartArea9.AxisX.ScaleView.MinSizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-			chartArea9.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-			chartArea9.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.DarkDownwardDiagonal;
-			chartArea9.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
-			chartArea9.Name = "ChartArea1";
-			this.chart.ChartAreas.Add(chartArea9);
+			chartArea2.Area3DStyle.IsRightAngleAxes = false;
+			chartArea2.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
+			chartArea2.Area3DStyle.WallWidth = 0;
+			chartArea2.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+			chartArea2.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+			chartArea2.AxisX.ScaleView.MinSizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+			chartArea2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+			chartArea2.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.DarkDownwardDiagonal;
+			chartArea2.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
+			chartArea2.Name = "ChartArea1";
+			this.chart.ChartAreas.Add(chartArea2);
 			this.chart.Cursor = System.Windows.Forms.Cursors.SizeAll;
 			this.chart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			legend9.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.Unscaled;
-			legend9.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-			legend9.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-			legend9.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-			legend9.BorderWidth = 5;
-			legend9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			legend9.IsTextAutoFit = false;
-			legend9.Name = "xxx";
-			legend9.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.chart.Legends.Add(legend9);
+			legend2.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.Unscaled;
+			legend2.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+			legend2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+			legend2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+			legend2.BorderWidth = 5;
+			legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			legend2.IsTextAutoFit = false;
+			legend2.Name = "xxx";
+			legend2.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chart.Legends.Add(legend2);
 			this.chart.Location = new System.Drawing.Point(-2, 6);
 			this.chart.Margin = new System.Windows.Forms.Padding(0);
 			this.chart.Name = "chart";
 			this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Light;
-			series9.ChartArea = "ChartArea1";
-			series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series9.Legend = "xxx";
-			series9.Name = "Series1";
-			series9.YValuesPerPoint = 6;
-			this.chart.Series.Add(series9);
-			this.chart.Size = new System.Drawing.Size(594, 432);
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.Legend = "xxx";
+			series2.Name = "Series1";
+			series2.YValuesPerPoint = 6;
+			this.chart.Series.Add(series2);
+			this.chart.Size = new System.Drawing.Size(717, 432);
 			this.chart.TabIndex = 5;
 			this.chart.Text = "chart1";
 			this.chart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
-			title9.Name = "Title1";
-			this.chart.Titles.Add(title9);
+			title2.Name = "Title1";
+			this.chart.Titles.Add(title2);
 			this.chart.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.Chart_PostPaint);
 			this.chart.Click += new System.EventHandler(this.ChartClick);
 			// 
@@ -230,7 +232,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 25);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(601, 435);
+			this.tabPage2.Size = new System.Drawing.Size(712, 435);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "options";
 			// 
@@ -254,7 +256,7 @@
 			this.tabPage3.Location = new System.Drawing.Point(4, 25);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(601, 435);
+			this.tabPage3.Size = new System.Drawing.Size(712, 435);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "configuration";
 			this.tabPage3.UseVisualStyleBackColor = true;
@@ -291,7 +293,7 @@
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.tabPage4.Size = new System.Drawing.Size(601, 435);
+			this.tabPage4.Size = new System.Drawing.Size(712, 435);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "stats";
 			// 
@@ -334,7 +336,7 @@
 			this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.button3.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.button3.ForeColor = System.Drawing.Color.Navy;
-			this.button3.Location = new System.Drawing.Point(611, 171);
+			this.button3.Location = new System.Drawing.Point(723, 170);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(103, 35);
 			this.button3.TabIndex = 4;
@@ -354,7 +356,7 @@
 			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.button2.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.button2.ForeColor = System.Drawing.Color.Navy;
-			this.button2.Location = new System.Drawing.Point(611, 136);
+			this.button2.Location = new System.Drawing.Point(723, 135);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(103, 29);
 			this.button2.TabIndex = 3;
@@ -375,7 +377,7 @@
 			this.buttonExecute.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonExecute.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.buttonExecute.ForeColor = System.Drawing.Color.Navy;
-			this.buttonExecute.Location = new System.Drawing.Point(611, 103);
+			this.buttonExecute.Location = new System.Drawing.Point(723, 102);
 			this.buttonExecute.Name = "buttonExecute";
 			this.buttonExecute.Size = new System.Drawing.Size(103, 28);
 			this.buttonExecute.TabIndex = 2;
@@ -397,7 +399,7 @@
 			this.loadTAButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.loadTAButton.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.loadTAButton.ForeColor = System.Drawing.Color.Navy;
-			this.loadTAButton.Location = new System.Drawing.Point(611, 67);
+			this.loadTAButton.Location = new System.Drawing.Point(723, 66);
 			this.loadTAButton.Margin = new System.Windows.Forms.Padding(7);
 			this.loadTAButton.Name = "loadTAButton";
 			this.loadTAButton.Size = new System.Drawing.Size(103, 30);
@@ -439,7 +441,7 @@
             "  arg 5 outReal: System.Double[] ",
             "",
             "InputDimension: 13"});
-			this.debugView.Location = new System.Drawing.Point(717, 22);
+			this.debugView.Location = new System.Drawing.Point(829, 22);
 			this.debugView.Margin = new System.Windows.Forms.Padding(0);
 			this.debugView.Name = "debugView";
 			this.debugView.ScrollAlwaysVisible = true;
@@ -472,7 +474,7 @@
 			this.nodelayCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.nodelayCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.nodelayCheckbox.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.nodelayCheckbox.Location = new System.Drawing.Point(621, 212);
+			this.nodelayCheckbox.Location = new System.Drawing.Point(733, 211);
 			this.nodelayCheckbox.Name = "nodelayCheckbox";
 			this.nodelayCheckbox.Size = new System.Drawing.Size(65, 20);
 			this.nodelayCheckbox.TabIndex = 6;
@@ -484,10 +486,10 @@
 			this.mainProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.mainProgressBar.BackColor = System.Drawing.SystemColors.Info;
 			this.mainProgressBar.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.mainProgressBar.Location = new System.Drawing.Point(718, 453);
+			this.mainProgressBar.Location = new System.Drawing.Point(829, 453);
 			this.mainProgressBar.Margin = new System.Windows.Forms.Padding(0);
 			this.mainProgressBar.Name = "mainProgressBar";
-			this.mainProgressBar.Size = new System.Drawing.Size(694, 11);
+			this.mainProgressBar.Size = new System.Drawing.Size(695, 20);
 			this.mainProgressBar.Step = 1;
 			this.mainProgressBar.TabIndex = 7;
 			this.mainProgressBar.Click += new System.EventHandler(this.mainProgressBar_Click);
@@ -504,7 +506,7 @@
             "sarprop",
             "quickprop",
             "rprop"});
-			this.listTrain.Location = new System.Drawing.Point(612, 297);
+			this.listTrain.Location = new System.Drawing.Point(724, 296);
 			this.listTrain.Name = "listTrain";
 			this.listTrain.Size = new System.Drawing.Size(102, 93);
 			this.listTrain.TabIndex = 8;
@@ -513,15 +515,24 @@
 			// 
 			this.label3.AutoEllipsis = true;
 			this.label3.BackColor = System.Drawing.SystemColors.Control;
-			this.label3.Font = new System.Drawing.Font("DejaVu Sans Condensed", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label3.ForeColor = System.Drawing.Color.Purple;
+			this.label3.Font = new System.Drawing.Font("Dubai", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.ForeColor = System.Drawing.Color.DeepPink;
 			this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label3.Location = new System.Drawing.Point(606, 421);
+			this.label3.Location = new System.Drawing.Point(718, 420);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(109, 32);
 			this.label3.TabIndex = 9;
 			this.label3.Text = "sarTemp";
 			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = global::FinancePermutator.Properties.Resources._39;
+			this.pictureBox1.Location = new System.Drawing.Point(760, 391);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(24, 26);
+			this.pictureBox1.TabIndex = 10;
+			this.pictureBox1.TabStop = false;
 			// 
 			// Form1
 			// 
@@ -530,7 +541,8 @@
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.SystemColors.Menu;
 			this.BackgroundImage = global::FinancePermutator.Properties.Resources.nicebg;
-			this.ClientSize = new System.Drawing.Size(1421, 500);
+			this.ClientSize = new System.Drawing.Size(1533, 500);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.listTrain);
 			this.Controls.Add(this.mainProgressBar);
@@ -562,6 +574,7 @@
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
 			this.tabPage4.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -594,5 +607,6 @@
         public System.Windows.Forms.ProgressBar mainProgressBar;
         public TextBox minSavePercTextBox;
 		public Label label3;
+		private PictureBox pictureBox1;
 	}
 }

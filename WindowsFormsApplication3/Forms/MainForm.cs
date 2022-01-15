@@ -18,19 +18,19 @@ using TicTacTec.TA.Library;
 using static FinancePermutator.Tools;
 
 /*
-                ░░ ♡ ▄▀▀▀▄░░░
-        ▄███▀░◐░░░▌░░░░░░░
-        ░░░░▌░░░░░▐░░░░░░░
-        ░░░░▐░░░░░▐░░░░░░░
-        ░░░░▌░░░░░▐▄▄░░░░░
-        ░░░░▌░░░░▄▀▒▒▀▀▀▀▄
-        ░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
-        ░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
-        ░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
-        ░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
-        ░░░░░░░░░░░▌▌░▌▌░░░░░
-        ░░░░░░░░░░░▌▌░▌▌░░░░░
-        ░░░░░░░░░▄▄▌▌▄▌▌░░░░░*/
+				░░ ♡ ▄▀▀▀▄░░░
+		▄███▀░◐░░░▌░░░░░░░
+		░░░░▌░░░░░▐░░░░░░░
+		░░░░▐░░░░░▐░░░░░░░
+		░░░░▌░░░░░▐▄▄░░░░░
+		░░░░▌░░░░▄▀▒▒▀▀▀▀▄
+		░░░▐░░░░▐▒▒▒▒▒▒▒▒▀▀▄
+		░░░▐░░░░▐▄▒▒▒▒▒▒▒▒▒▒▀▄
+		░░░░▀▄░░░░▀▄▒▒▒▒▒▒▒▒▒▒▀▄
+		░░░░░░▀▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▀▄
+		░░░░░░░░░░░▌▌░▌▌░░░░░
+		░░░░░░░░░░░▌▌░▌▌░░░░░
+		░░░░░░░░░▄▄▌▌▄▌▌░░░░░*/
 
 namespace FinancePermutator.Forms
 {
@@ -119,7 +119,7 @@ namespace FinancePermutator.Forms
 		private static bool IsGoodMethod(MethodInfo method)
 		{
 			/*if (method.ToString().Contains("Cdl"))
-               return false;*/
+			   return false;*/
 			if (method.ToString().Contains("Single[]"))
 				return false;
 			if (method.ToString().Contains("Lookback"))
