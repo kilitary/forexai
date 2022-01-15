@@ -71,7 +71,7 @@ namespace FinancePermutator.Networks
 			Program.Form.AddConfiguration($" LayerActFunc o: {activationFunc}");
 			network.SetActivationFunctionLayer(activationFunc, 2);
 
-			temperature = 50.0F;
+			temperature = Configuration.startSarTemp;
 		}
 
 		/*
@@ -148,7 +148,7 @@ namespace FinancePermutator.Networks
 
 					Program.Form.chart.Invoke((MethodInvoker)(() =>
 					{
-						Program.Form.label3.Text = $"{(float)temperature}";
+						Program.Form.label3.Text = $"t⁰ {(float)temperature}";
 					}));
 
 					ret = network.TrainEpochSarpropParallel(trainData, 4);

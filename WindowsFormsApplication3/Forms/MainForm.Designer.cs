@@ -35,11 +35,11 @@
         {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			System.Windows.Forms.DataVisualization.Charting.LineAnnotation lineAnnotation3 = new System.Windows.Forms.DataVisualization.Charting.LineAnnotation();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+			System.Windows.Forms.DataVisualization.Charting.LineAnnotation lineAnnotation5 = new System.Windows.Forms.DataVisualization.Charting.LineAnnotation();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
 			this.loadPricesButton = new System.Windows.Forms.Button();
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.showValues = new System.Windows.Forms.CheckBox();
@@ -155,8 +155,8 @@
 			// 
 			// chart
 			// 
-			lineAnnotation3.Name = "LineAnnotation1";
-			this.chart.Annotations.Add(lineAnnotation3);
+			lineAnnotation5.Name = "LineAnnotation1";
+			this.chart.Annotations.Add(lineAnnotation5);
 			this.chart.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Graphics;
 			this.chart.BackColor = System.Drawing.Color.Ivory;
 			this.chart.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.Center;
@@ -178,45 +178,45 @@
 			this.chart.BorderSkin.BorderWidth = 3;
 			this.chart.BorderSkin.PageColor = System.Drawing.Color.Turquoise;
 			this.chart.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.Emboss;
-			chartArea3.Area3DStyle.IsRightAngleAxes = false;
-			chartArea3.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
-			chartArea3.Area3DStyle.WallWidth = 0;
-			chartArea3.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
-			chartArea3.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-			chartArea3.AxisX.ScaleView.MinSizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-			chartArea3.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-			chartArea3.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.DarkDownwardDiagonal;
-			chartArea3.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
-			chartArea3.Name = "ChartArea1";
-			this.chart.ChartAreas.Add(chartArea3);
+			chartArea5.Area3DStyle.IsRightAngleAxes = false;
+			chartArea5.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
+			chartArea5.Area3DStyle.WallWidth = 0;
+			chartArea5.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.Lines;
+			chartArea5.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+			chartArea5.AxisX.ScaleView.MinSizeType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
+			chartArea5.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+			chartArea5.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.DarkDownwardDiagonal;
+			chartArea5.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
+			chartArea5.Name = "ChartArea1";
+			this.chart.ChartAreas.Add(chartArea5);
 			this.chart.Cursor = System.Windows.Forms.Cursors.SizeAll;
 			this.chart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			legend3.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.Unscaled;
-			legend3.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-			legend3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-			legend3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
-			legend3.BorderWidth = 5;
-			legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			legend3.IsTextAutoFit = false;
-			legend3.Name = "xxx";
-			legend3.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.chart.Legends.Add(legend3);
+			legend5.BackImageWrapMode = System.Windows.Forms.DataVisualization.Charting.ChartImageWrapMode.Unscaled;
+			legend5.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+			legend5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+			legend5.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+			legend5.BorderWidth = 5;
+			legend5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			legend5.IsTextAutoFit = false;
+			legend5.Name = "xxx";
+			legend5.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.chart.Legends.Add(legend5);
 			this.chart.Location = new System.Drawing.Point(-2, 6);
 			this.chart.Margin = new System.Windows.Forms.Padding(0);
 			this.chart.Name = "chart";
 			this.chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Light;
-			series3.ChartArea = "ChartArea1";
-			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series3.Legend = "xxx";
-			series3.Name = "Series1";
-			series3.YValuesPerPoint = 6;
-			this.chart.Series.Add(series3);
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series5.Legend = "xxx";
+			series5.Name = "Series1";
+			series5.YValuesPerPoint = 6;
+			this.chart.Series.Add(series5);
 			this.chart.Size = new System.Drawing.Size(594, 432);
 			this.chart.TabIndex = 5;
 			this.chart.Text = "chart1";
 			this.chart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.SystemDefault;
-			title3.Name = "Title1";
-			this.chart.Titles.Add(title3);
+			title5.Name = "Title1";
+			this.chart.Titles.Add(title5);
 			this.chart.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.Chart_PostPaint);
 			this.chart.Click += new System.EventHandler(this.ChartClick);
 			// 
@@ -491,6 +491,9 @@
 			// 
 			// listTrain
 			// 
+			this.listTrain.BackColor = System.Drawing.SystemColors.HotTrack;
+			this.listTrain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.listTrain.ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
 			this.listTrain.FormattingEnabled = true;
 			this.listTrain.Items.AddRange(new object[] {
             "sarprop",
@@ -498,20 +501,19 @@
             "rprop"});
 			this.listTrain.Location = new System.Drawing.Point(612, 297);
 			this.listTrain.Name = "listTrain";
-			this.listTrain.Size = new System.Drawing.Size(102, 95);
+			this.listTrain.Size = new System.Drawing.Size(102, 93);
 			this.listTrain.TabIndex = 8;
 			// 
 			// label3
 			// 
 			this.label3.AutoEllipsis = true;
 			this.label3.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-			this.label3.Font = new System.Drawing.Font("Bubblegum Sans", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Font = new System.Drawing.Font("Century", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.label3.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.label3.Image = global::FinancePermutator.Properties.Resources._39;
 			this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label3.Location = new System.Drawing.Point(615, 411);
+			this.label3.Location = new System.Drawing.Point(606, 421);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(92, 32);
+			this.label3.Size = new System.Drawing.Size(109, 32);
 			this.label3.TabIndex = 9;
 			this.label3.Text = "sarTemp";
 			this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
