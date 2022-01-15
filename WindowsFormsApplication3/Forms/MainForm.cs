@@ -143,13 +143,15 @@ namespace FinancePermutator.Forms
 
         private static bool CheckUsageFunction(MethodInfo methodInfo)
         {
-            //int inputDimension = XRandom.next(8, (XRandom.next(9, Configuration.InputDimension)));
-            int inputDimension = Configuration.maxInputDimension;
+            //int inputDimension = Configuration.maxInputDimension;
+			int inputDimension = XRandom.next(8, Configuration.maxInputDimension);
 
-            // generate parameters
-            FunctionParameters functionParameters = new FunctionParameters(methodInfo, inputDimension, 0);
+			// generate parameters
+			FunctionParameters functionParameters = new FunctionParameters(methodInfo, inputDimension, 0);
 
             debug($"Method : {methodInfo.Name}");
+			debug($"dimensuion: {inputDimension}");
+
             string json = JsonConvert.SerializeObject(functionParameters);
             debug($"Params: {json}");
 

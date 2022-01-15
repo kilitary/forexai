@@ -72,9 +72,9 @@
 	        this.tabPage3.SuspendLayout();
 	        this.tabPage4.SuspendLayout();
 	        this.SuspendLayout();
-	        //
+	        // 
 	        // loadPricesButton
-	        //
+	        // 
 	        this.loadPricesButton.AllowDrop = true;
 	        this.loadPricesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 	        this.loadPricesButton.BackColor = System.Drawing.SystemColors.Menu;
@@ -96,9 +96,9 @@
 	        this.loadPricesButton.Text = "load prices";
 	        this.loadPricesButton.UseVisualStyleBackColor = false;
 	        this.loadPricesButton.Click += new System.EventHandler(this.LoadPricesButtonClick);
-	        //
+	        // 
 	        // notifyIcon1
-	        //
+	        // 
 	        this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
 	        this.notifyIcon1.BalloonTipText = "ef vf df dd fg";
 	        this.notifyIcon1.BalloonTipTitle = "d gfhth rhgh";
@@ -107,9 +107,9 @@
 	        this.notifyIcon1.Visible = true;
 	        this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayClick);
 	        this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1MouseDoubleClick);
-	        //
+	        // 
 	        // showValues
-	        //
+	        // 
 	        this.showValues.AutoSize = true;
 	        this.showValues.BackColor = System.Drawing.Color.RoyalBlue;
 	        this.showValues.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -123,9 +123,9 @@
 	        this.showValues.Text = "showValues";
 	        this.showValues.UseVisualStyleBackColor = false;
 	        this.showValues.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
-	        //
+	        // 
 	        // tabControl1
-	        //
+	        // 
 	        this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
 	        this.tabControl1.Controls.Add(this.tabPage1);
 	        this.tabControl1.Controls.Add(this.tabPage2);
@@ -139,9 +139,9 @@
 	        this.tabControl1.SelectedIndex = 0;
 	        this.tabControl1.Size = new System.Drawing.Size(609, 464);
 	        this.tabControl1.TabIndex = 2;
-	        //
+	        // 
 	        // tabPage1
-	        //
+	        // 
 	        this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
 	        this.tabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 	        this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -152,9 +152,9 @@
 	        this.tabPage1.Size = new System.Drawing.Size(601, 435);
 	        this.tabPage1.TabIndex = 0;
 	        this.tabPage1.Text = "Preload";
-	        //
+	        // 
 	        // chart
-	        //
+	        // 
 	        lineAnnotation1.Name = "LineAnnotation1";
 	        this.chart.Annotations.Add(lineAnnotation1);
 	        this.chart.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Graphics;
@@ -219,9 +219,9 @@
 	        this.chart.Titles.Add(title1);
 	        this.chart.PostPaint += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ChartPaintEventArgs>(this.Chart_PostPaint);
 	        this.chart.Click += new System.EventHandler(this.ChartClick);
-	        //
+	        // 
 	        // tabPage2
-	        //
+	        // 
 	        this.tabPage2.BackColor = System.Drawing.SystemColors.ButtonShadow;
 	        this.tabPage2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 	        this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -235,9 +235,9 @@
 	        this.tabPage2.Size = new System.Drawing.Size(601, 435);
 	        this.tabPage2.TabIndex = 1;
 	        this.tabPage2.Text = "options";
-	        //
+	        // 
 	        // label2
-	        //
+	        // 
 	        this.label2.AutoSize = true;
 	        this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 	        this.label2.Location = new System.Drawing.Point(26, 24);
@@ -245,9 +245,9 @@
 	        this.label2.Size = new System.Drawing.Size(112, 17);
 	        this.label2.TabIndex = 4;
 	        this.label2.Text = "Show input values";
-	        //
+	        // 
 	        // label1
-	        //
+	        // 
 	        this.label1.AutoSize = true;
 	        this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 	        this.label1.Location = new System.Drawing.Point(1, 56);
@@ -255,9 +255,9 @@
 	        this.label1.Size = new System.Drawing.Size(139, 17);
 	        this.label1.TabIndex = 3;
 	        this.label1.Text = "MinSaveHitPercent (%)";
-	        //
+	        // 
 	        // minSavePercTextBox
-	        //
+	        // 
 	        this.minSavePercTextBox.BackColor = System.Drawing.SystemColors.MenuHighlight;
 	        this.minSavePercTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 	        this.minSavePercTextBox.Cursor = System.Windows.Forms.Cursors.UpArrow;
@@ -268,9 +268,9 @@
 	        this.minSavePercTextBox.TabIndex = 2;
 	        this.minSavePercTextBox.Text = "86";
 	        this.minSavePercTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-	        //
+	        // 
 	        // tabPage3
-	        //
+	        // 
 	        this.tabPage3.BackColor = System.Drawing.Color.Maroon;
 	        this.tabPage3.Controls.Add(this.configurationTab);
 	        this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -280,9 +280,9 @@
 	        this.tabPage3.TabIndex = 2;
 	        this.tabPage3.Text = "configuration";
 	        this.tabPage3.UseVisualStyleBackColor = true;
-	        //
+	        // 
 	        // configurationTab
-	        //
+	        // 
 	        this.configurationTab.AcceptsReturn = true;
 	        this.configurationTab.AcceptsTab = true;
 	        this.configurationTab.AccessibleRole = System.Windows.Forms.AccessibleRole.Table;
@@ -299,9 +299,9 @@
 	        this.configurationTab.Size = new System.Drawing.Size(598, 432);
 	        this.configurationTab.TabIndex = 0;
 	        this.configurationTab.Text = resources.GetString("configurationTab.Text");
-	        //
+	        // 
 	        // tabPage4
-	        //
+	        // 
 	        this.tabPage4.BackColor = System.Drawing.Color.CornflowerBlue;
 	        this.tabPage4.BackgroundImage = global::FinancePermutator.Properties.Resources.nuke;
 	        this.tabPage4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -316,9 +316,9 @@
 	        this.tabPage4.Size = new System.Drawing.Size(601, 435);
 	        this.tabPage4.TabIndex = 3;
 	        this.tabPage4.Text = "stats";
-	        //
+	        // 
 	        // statsBox
-	        //
+	        // 
 	        this.statsBox.BackColor = System.Drawing.SystemColors.GrayText;
 	        this.statsBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
 	        this.statsBox.ForeColor = System.Drawing.Color.Azure;
@@ -327,9 +327,9 @@
 	        this.statsBox.Size = new System.Drawing.Size(587, 424);
 	        this.statsBox.TabIndex = 0;
 	        this.statsBox.Text = "Networks done: 2\nSuccess: 0\nNumber of broken data: 3\nBad networks: 1";
-	        //
+	        // 
 	        // statusLabel
-	        //
+	        // 
 	        this.statusLabel.BackColor = System.Drawing.Color.LightGoldenrodYellow;
 	        this.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 	        this.statusLabel.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -342,9 +342,9 @@
 	        this.statusLabel.Size = new System.Drawing.Size(800, 19);
 	        this.statusLabel.TabIndex = 6;
 	        this.statusLabel.Text = "idle";
-	        //
+	        // 
 	        // button3
-	        //
+	        // 
 	        this.button3.BackColor = System.Drawing.SystemColors.ButtonFace;
 	        this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
 	        this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -363,9 +363,9 @@
 	        this.button3.Text = "clear log";
 	        this.button3.UseVisualStyleBackColor = false;
 	        this.button3.Click += new System.EventHandler(this.ExecuteButtonClick);
-	        //
+	        // 
 	        // button2
-	        //
+	        // 
 	        this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
 	        this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
 	        this.button2.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
@@ -383,9 +383,9 @@
 	        this.button2.Text = "clear";
 	        this.button2.UseVisualStyleBackColor = false;
 	        this.button2.Click += new System.EventHandler(this.CreateNetworkButtonClick);
-	        //
+	        // 
 	        // buttonExecute
-	        //
+	        // 
 	        this.buttonExecute.BackColor = System.Drawing.SystemColors.ButtonFace;
 	        this.buttonExecute.Cursor = System.Windows.Forms.Cursors.Hand;
 	        this.buttonExecute.Enabled = false;
@@ -404,9 +404,9 @@
 	        this.buttonExecute.Text = "execute";
 	        this.buttonExecute.UseVisualStyleBackColor = false;
 	        this.buttonExecute.Click += new System.EventHandler(this.GenerateTrainButtonClick);
-	        //
+	        // 
 	        // loadTAButton
-	        //
+	        // 
 	        this.loadTAButton.AllowDrop = true;
 	        this.loadTAButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 	        this.loadTAButton.BackColor = System.Drawing.SystemColors.Control;
@@ -427,15 +427,15 @@
 	        this.loadTAButton.Text = "load talib";
 	        this.loadTAButton.UseVisualStyleBackColor = false;
 	        this.loadTAButton.Click += new System.EventHandler(this.LoadTaLib);
-	        //
+	        // 
 	        // timeFast
-	        //
+	        // 
 	        this.timeFast.Enabled = true;
 	        this.timeFast.Interval = 150;
 	        this.timeFast.Tick += new System.EventHandler(this.TimeFastTick);
-	        //
+	        // 
 	        // debugView
-	        //
+	        // 
 	        this.debugView.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (255)))), ((int) (((byte) (255)))), ((int) (((byte) (192)))));
 	        this.debugView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 	        this.debugView.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
@@ -451,9 +451,9 @@
 	        this.debugView.Size = new System.Drawing.Size(695, 431);
 	        this.debugView.TabIndex = 3;
 	        this.debugView.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.DebugView_Draw);
-	        //
+	        // 
 	        // funcListLabel
-	        //
+	        // 
 	        this.funcListLabel.BackColor = System.Drawing.SystemColors.ButtonFace;
 	        this.funcListLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
 	        this.funcListLabel.Cursor = System.Windows.Forms.Cursors.Default;
@@ -469,9 +469,9 @@
 	        this.funcListLabel.Text = "conmtraimer";
 	        this.funcListLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 	        this.funcListLabel.WordWrap = false;
-	        //
+	        // 
 	        // nodelayCheckbox
-	        //
+	        // 
 	        this.nodelayCheckbox.AutoSize = true;
 	        this.nodelayCheckbox.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (204)));
 	        this.nodelayCheckbox.Location = new System.Drawing.Point(621, 212);
@@ -480,29 +480,31 @@
 	        this.nodelayCheckbox.TabIndex = 6;
 	        this.nodelayCheckbox.Text = "no delay";
 	        this.nodelayCheckbox.UseVisualStyleBackColor = true;
-	        //
+	        // 
 	        // mainProgressBar
-	        //
+	        // 
+	        this.mainProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 	        this.mainProgressBar.BackColor = System.Drawing.SystemColors.Info;
-	        this.mainProgressBar.ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
+	        this.mainProgressBar.ForeColor = System.Drawing.SystemColors.MenuHighlight;
 	        this.mainProgressBar.Location = new System.Drawing.Point(718, 453);
 	        this.mainProgressBar.Margin = new System.Windows.Forms.Padding(0);
 	        this.mainProgressBar.Name = "mainProgressBar";
 	        this.mainProgressBar.Size = new System.Drawing.Size(694, 11);
+	        this.mainProgressBar.Step = 1;
 	        this.mainProgressBar.TabIndex = 7;
 	        this.mainProgressBar.Click += new System.EventHandler(this.mainProgressBar_Click);
-	        //
+	        // 
 	        // listTrain
-	        //
+	        // 
 	        this.listTrain.FormattingEnabled = true;
 	        this.listTrain.Items.AddRange(new object[] {"sarprop", "quickprop", "rprop"});
 	        this.listTrain.Location = new System.Drawing.Point(612, 297);
 	        this.listTrain.Name = "listTrain";
 	        this.listTrain.Size = new System.Drawing.Size(102, 95);
 	        this.listTrain.TabIndex = 8;
-	        //
+	        // 
 	        // Form1
-	        //
+	        // 
 	        this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 	        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 	        this.AutoSize = true;

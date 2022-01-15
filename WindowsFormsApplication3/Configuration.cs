@@ -16,7 +16,7 @@ namespace FinancePermutator
         public static int TrainLimitEpochs = 222;
         public static uint DefaultHiddenNeurons = 0;
         public static float startSarTemp = 50.0f;
-        public static float heatDelta = 0.05f;
+        public static float heatDelta = 0.1f;
         public static int SleepTime = 300;
         public static int SleepCheckTime = 10000;
         public static int OutputIndex = 15;
