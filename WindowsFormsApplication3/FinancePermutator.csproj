@@ -314,6 +314,9 @@
     <None Include="Resources\graph.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chancel.wav" />
+    <Content Include="foto.wav" />
+    <Content Include="start.wav" />
     <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
