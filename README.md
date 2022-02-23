@@ -1,5 +1,5 @@
 ![photo-original.png](https://bitbucket.org/repo/64RkKMg/images/1704156120-photo-original.png) 
-# Wel**com***e* #
+# Well**co***me* #
 
 
 
@@ -74,6 +74,6 @@
 **C**# коннектор: http://joelself.github.io/FannCSharp/files/NeuralNetFloat-cs.html
 
 
-[d**is**connect]
+[d**i**s**connect]
 
 ♥
