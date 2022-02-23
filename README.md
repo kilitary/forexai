@@ -74,6 +74,6 @@
 **C**# коннектор: http://joelself.github.io/FannCSharp/files/NeuralNetFloat-cs.html
 
 
-[disconnect**]
+[disconnect**l**]
 
 ♥
