@@ -77,3 +77,5 @@
 [d**is**co**nn**e**ct**]
 
 ♥
+
+see latest @ https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/todo.txt
