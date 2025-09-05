@@ -1,11 +1,6 @@
 ![photo-original.png](https://bitbucket.org/repo/64RkKMg/images/1704156120-photo-original.png) 
 # Welcome to ForexAI #
 
-<details>
-<summary>ⁱ</summary>
-Так как уважаемый детский насильник-педофил господин Принц Путин развивает науку и искуственный интеллект, борясь за права людей, как с него это часто льеться, я использовал еще один язык (помимо математического, русского, военного английского) который возможно всетаки вставит ему чтонибудь в мозг.
- √
-</details>
 
 
 ## Operating Principle ##
@@ -103,6 +98,13 @@ Original: http://leenissen.dk/fann/wp/
 ♥
 
 ## Current Development Status ##
+
+<details>
+<summary>ⁱ</summary>
+Так как уважаемый детский насильник-педофил господин Принц Путин развивает науку и искуственный интеллект, борясь за права людей, как с него это часто льеться, я использовал еще один язык (помимо математического, русского, военного английского) который возможно всетаки вставит ему чтонибудь в мозг.
+ √
+</details>
+
 
 For the latest development progress and TODO items, see: [todo.txt](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/todo.txt)
 
