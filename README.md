@@ -1,81 +1,119 @@
 ![photo-original.png](https://bitbucket.org/repo/64RkKMg/images/1704156120-photo-original.png) 
-# Well**co***me* #
+# Welcome to ForexAI #
 
 
 
-## Принцип работы  ##
+## Operating Principle ##
 
-**С**истема занимаеться подбором параметров для математических функций TA-LIB так, што в итоге применонные к прайсам функции позволяют **классифицировать ситуацию** на ближайшие 5-10 минут вперед.
-Система не являеться предсказателем, во всяком случае я отказался от этой идеи так как это требует еще большие массивы данных и мощности. Она (cеть), являеться **классификатором** 3-х классов. 
+The **system** focuses on parameter tuning for mathematical functions from [TA-LIB](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Function/Function.cs) so that the functions applied to price data allow **situation classification** for the next 5-10 minutes ahead.
+
+The system is not a predictor - at least I abandoned this idea since it requires even larger data arrays and computational power. The [neural network](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Networks/Network.cs) is a **classifier** of 3 classes: 
 ```
-1) ситуация удобна для SELL
-2) ситуация удобна для BUY
-3) сеть не уверена ни в какой ситуации, вы можете оценить выходку сети и/или использовать (например) мартингейл.
-```
-
-## Логика программы в  ##
-
-Как известно на рынке торгуют используя какието стратегии. Самый простейший вариант торговли вручную это вход в рынок (BUY/SELL) при срабатывании какогонибудь условия, к примеру Avg(HIGH) < Avg(HIGH-5). Реальные стратегии могут иметь более 5 таких разных условий. Это **логический** способ торговли, где вы можете расставить все условия как **IF/ELSE**. Не будем трогать фундаментальный анализ, он нам не нужен. Параметры рынка даны в каждый тик времени и определяються так : High/Low/Open/Close и еще Vol (volume, обьём. правда я так и не понял чего, скорее всего торгов).
-Так как рынок на 60% представляет из себя автоматически торгующий софт, не трудно догадаться што большие обьемы запросов к рынку будет выполнен при одинаковых условиях. Например у нас есть 100 разных ботов которые торгуют по пробитию Bollinger Bands (актуально кстати). Таким образом при срабатывании условия на рынок сразу поступит 100 запсрово buy или sell. Рынок отреагирует на это изменением цены, а следовательно мы это увидим на графике как подьём или спад бара. Ситуации к этому приводящие трудно увидеть невооруженным глазом или используя обычный арсенал MT4. Для этого и существуют библиотеки анализа маркета. При натравливании их на текущие прайсы, спустя какоето время (да, для некоторых функций нужно время, мы не сможем например получить четкий ответ если функция еще недособирала информации.) они выдают результат в виде плавных графиков или баров если это cdl\* функции. 
-
-## Задача  сети ## 
-
-**С**еть способна анализировать ситуации приводящие к изменению бара. Это просто звучит, но на деле это очень большое кол-во ниточек которые надо распутать, и распутываються они с большим количеством данных для тренировок (а также параметрами тренировки, но это уже потом будем проходить). Пустив на вход сети  данные анализа прайсов 
-(пока абстрагируемся от топологии и схемы самих данных) мы приближаем сеть к возможности различать мелкие или неочень изменения, приводящие к изменению бара. А теперь вернемся в прошлое на один абзац назад. 100 ботов увидело што bollinger bands пробит на 0.00200 пунктов (эт много кстати), и после этого на измерительной сетке следующий бар упал вниз или поднялся вверх. Это происходит десятки раз за 5-минутный график например на GBPUSD (там высокая волатильность, т.е. он быстро и значительно меняеться со временем, противоположник flat). Сеть, подкрутив свои весы для подгона выходных желаемых к выходным реальным данным запоминает што за 4 бара до этого были такието действия. Это повторяеца тысячи (и даже миллионы) раз, за так называемую **эпоху**, когда данные вновь и вновь поступают на вход сети для подкрутки весов. Итак, она увидела какие это были изименения спустя тысячу, две эпох. Следовательно такая натренированная сеть увидев эти данные снова сможет сказать нам што щаз будет тото-тото. Еще проще: ваша жина смотрит на часы, приближаеться время вашего прихода, и вы есно после работки хотите пожрать, и есно она это знает и начинает готовить вам жрачку; вы вчера ели мясо и жена знает што вы не любите повторять ся, и готовит вам пюре с котлетками. Так вот то што вы - приходите это и есть то што запомнила нейросеть жены; если у неё есть мозг. А то што она готовит это выходные данные, для вас. Еще ситуасьён: вы знаете што тачка при более 180км/ч начинает разваливаться на части (девятка например), поэтому што вы делаете? вы не разгоняетесь до 180 а ездите безопасно на 100-120км/ч. Так вот то што вы знаете - получено это опытом или нет, неважно - являеться причиной того што вы ездите на 100-120 км/ч, так сказать выходные данные вашего мозга при разборе вопроса о скорости. Непонятно? ну тогда я х3. смотрите моднявые на данный момент касты про AI, коих последние 4 года появилось тысячи (пожалуйста)
-
-## Способ FANN+TA-LIB ##
-
-Мы можем иметь жену штобы управлять ею для готовки. А она может наблюдать за другой, штобы  научиться быть хорошей женой и понимать што надо готовить свежую еду, а не вечернюю вчераприготовленную жрать. Блять почему жена? Эшкере конечно , но малоли этот текст будет читать Mike или CodeMonkey и они разьебут нахуй свои мониторы, снова вспомнив этот флейм пятничный на IRC: do you want fuck my wife?. Просто. Так вот, смотрит она такая и видит... ага..... муш пришел и  унего жрачка готова, сделано за 2 часа до прихода. И он доволен они короче сидят ужинают веселяться, анекдоты рассказывают про вовочку и прочее. А потом даже ебуца. А потом вообще оказываеца что жена - это - мужик, а ты -  в тайланде. Но оп ус тим эт о. Следовательно обьект удовлетворён значит надо повторить этиже действия с другим обьектом, штобы достигнуть результата. Разберем всё по параметрам: в задаче есть жена - X, муж - Y, еда - Z, время до прихода - Q, радость мужа - W. и всё. Так вот аш простая агентская система получилась, с поощрениями. <- Это вариант **логического подхода**, когда мы знаем какието условия или пересечения условий. В случае же с нейросетями обычный подход разрабатываеться путем скурпулезных математических расчетов для выбора функций, их параметров и очередности для того штобы всё это "converge"-валось, т.е. давало результат функции такой, какой предписан математическими расчетами. Но мы - будем использовать рандом для всего этого. Сначало это был просто тестовый проект который показывал 60% успеха. Это значит што из 100% мы сделали только 10%. Просто потому што странно (?), но рандом - всегда будет показывать 50% попаданий. Если он другой - или у вас цру на компутере переделало рандом или вы вообще написали свою бредовую рандом функцию. Надо так. Так вот, мы полностью автоматизируем этот процесс. У нас есть функции TA-LIB, мы знаем их параметры и диапазоны значений (todo:validate). Будем брать рандомную функцию, вставлять её в нашу сетку параметров, попутно рандомно применяя параметры функции. Это было бы нереально во времена x486 компутеров, но щаз у нас уже есть мощности штобы это делать. Я не говорю даже еще про клоуд-компутинг... Так вот, мы создаем линейку функций и их параметров для входа в сеть до тех пор, пока тест этой сети не будет показывать нам нужную процентность попадания. На данный момент потолок который я видел это 91%. 
-Што мы рандомизируем:
-```
-1) кол-во функций в конвеере
-2) выбираем алгоритм функции avg/STOCH/MOM/ta*
-3) параметры этой функции
-4) очередность функции в конвеере (конвеер может содержать от 1 до nAN сиквенсов входа)
-5) кол-во входящих параметров для функции (т.е. сколько брать прайсов high/low/open...), в коде это InputDimension
-6) функция активации для входящего слоя нейросети
-7) функция активации для промежуточных слоёв нейросети
-8) кол-во нейронов в слоях
-9) дополнительные параметры сети, отталкивающиеся от алгоритма трейна. например LearningRate, процентность соединенных между собой нейронов (Connection Rate), RPROP Step size, Weight Decoy, Temp 
-(если это SARPROP. про охлаждени или подогрев сказать немног о, говорят математика точна. но в инете конфкликтующая между собой информация по этому поводу, ктото пишет про подогрев, ктото говорит про изначальный тест этой технологии при охлаждении а именно оптимальное распределение атомов в кристаллической решетке в момент остывания, тоесть при подогреве будет обратный эффект, даже примерно понятно дураку што другой. 
-но мне с моим матаном это не проверить, я даже иногда думал што это по приколу написанные (кемто?нахуя бля??) фейки. я даже находил комбинированные технологии температур, но и это интересно. ведь пробовать разные технологии трейна в одной эпохе я тоже начал по логике собственной фантазии). 
-и еще кучу пораметров, которые мы можем изменить и што самое важное, мы маленьким измененим можем получить реально работающую сеть, тогда как применив другие трейны или коренным образом поменяв трейн данные не получим. в00т.
+1) situation suitable for SELL
+2) situation suitable for BUY  
+3) network is uncertain about the situation, you can evaluate the network's output and/or use (for example) martingale.
 ```
 
-Упрощенная схема:
+## Program Logic ##
+
+As known, trading in the market uses various strategies. The simplest manual trading variant is market entry (BUY/SELL) when some condition triggers, for example Avg(HIGH) < Avg(HIGH-5). Real strategies can have more than 5 such different conditions. This is a **logical** trading approach where you can arrange all conditions as **IF/ELSE** statements. Let's not touch fundamental analysis - we don't need it. Market parameters are given at each time tick and are defined as: High/Low/Open/Close and also Vol (volume, though I never quite understood what exactly, most likely trading volume).
+
+Since the market is 60% automated trading software, it's not hard to guess that large volumes of market requests will be executed under the same conditions. For example, we have 100 different bots trading on Bollinger Band breakouts (quite relevant, by the way). Thus, when the condition triggers, 100 buy or sell requests immediately hit the market. The market will react with price changes, which we'll see on the chart as a bar rise or fall. The situations leading to this are hard to see with the naked eye or using the usual MT4 arsenal. This is why market analysis libraries exist. When applied to current prices, after some time (yes, some functions need time - we can't get a clear answer if the function hasn't collected enough information yet), they produce results as smooth charts or bars for cdl* functions.
+
+## Network Task ## 
+
+The **network** is capable of analyzing situations that lead to bar changes. This sounds simple, but in practice it involves a huge number of threads that need to be unraveled, and they are unraveled with large amounts of training data (as well as training parameters, but we'll cover that later). By feeding price analysis data to the network input (abstracting from the topology and data schema for now), we bring the network closer to being able to distinguish small or not-so-small changes that lead to bar changes. 
+
+Now let's go back one paragraph. 100 bots saw that Bollinger bands were broken by 0.00200 points (that's a lot, by the way), and after that on the measuring grid, the next bar fell down or rose up. This happens dozens of times on a 5-minute chart, for example on GBPUSD (high volatility there - it changes quickly and significantly over time, opposite of flat). The network, adjusting its weights to fit the desired outputs to actual output data, remembers what actions occurred 4 bars before this. This repeats thousands (even millions) of times during a so-called **epoch**, when data repeatedly flows to the network input for weight adjustment. So, after thousands or two thousand epochs, it learned what these changes were. Consequently, such a trained network, seeing this data again, can tell us what will happen next.
+
+Even simpler analogy: your wife looks at the clock, your arrival time approaches, and naturally after work you want to eat, and naturally she knows this and starts cooking for you; yesterday you ate meat and your wife knows you don't like to repeat, so she cooks mashed potatoes with cutlets for you. So what you do - coming home - is what the wife's neural network remembered; if she has a brain. And what she cooks is the output data for you. Another situation: you know that a car starts falling apart at speeds over 180 km/h (a Lada, for example), so what do you do? You don't accelerate to 180 but drive safely at 100-120 km/h. So what you know - whether gained through experience or not, doesn't matter - is the reason you drive at 100-120 km/h, the output data of your brain when processing speed questions. Don't understand? Then I give up. Watch the trendy AI podcasts that have appeared in thousands over the last 4 years (please).
+
+## FANN+TA-LIB Approach ##
+
+We can have a system to manage cooking tasks. The system can observe another to learn how to be efficient and understand that fresh food should be prepared, not yesterday's leftovers. The point is simple observation and learning patterns.
+
+Looking at this approach, when someone arrives and the meal is ready, prepared 2 hours before arrival, the person is satisfied. So we need to repeat these same actions with another subject to achieve the result. Let's break everything down by parameters: in the task there's subject X, subject Y, food Z, time before arrival Q, satisfaction level W. That's it. So we get a simple agent system with rewards. 
+
+This is the **logical approach** variant, when we know certain conditions or condition intersections. In the case of neural networks, the usual approach is developed through meticulous mathematical calculations for selecting functions, their parameters, and sequence so that everything "converges" - i.e., produces function results as prescribed by mathematical calculations. But we will use randomization for all this. Initially, this was just a test project that showed 60% success. This means from 100% we only achieved 10%. Simply because, strangely, random will always show 50% hits. If it's different - either your computer's CPU modified the random function or you wrote your own weird random function.
+
+So, we fully automate this process. We have [TA-LIB functions](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Function/Function.cs), we know their parameters and value ranges (todo: validate). We take a random function, insert it into our parameter grid, while randomly applying function parameters. This would have been impossible in x486 computer times, but now we have the power to do this. I'm not even talking about cloud computing yet... 
+
+So we create a lineup of functions and their parameters for network input until testing this network shows us the needed hit percentage. Currently, the ceiling I've seen is 91%.
+
+What we randomize (see [parameter generators](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Generators/)):
+```
+1) number of functions in the pipeline
+2) function algorithm selection: avg/STOCH/MOM/ta*
+3) function parameters  
+4) function order in pipeline (pipeline can contain from 1 to N input sequences)
+5) number of input parameters for function (i.e. how many prices high/low/open... to take), in code this is [InputDimension](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Configuration.cs#L10)
+6) activation function for input layer of neural network
+7) activation function for hidden layers of neural network
+8) number of neurons in layers
+9) additional network parameters based on training algorithm, e.g. LearningRate, percentage of interconnected neurons (Connection Rate), RPROP Step size, Weight Decay, Temperature 
+ (if using SARPROP. Regarding cooling or heating, they say the mathematics is exact, but there's conflicting information online about this. Some write about heating, others talk about the original test of this technology with cooling - namely optimal atom distribution in a crystal lattice during cooling, so heating would have the opposite effect, which is roughly understandable. 
+
+But with my math knowledge I can't verify this - I sometimes even thought these were jokes written by someone for some reason. I even found combined temperature technologies, which is also interesting, since I started trying different training technologies in one epoch based on my own imagination).
+
+And many other parameters that we can change, and most importantly, with small changes we can get a truly working network, whereas applying other training methods or drastically changing training data won't work.
+```
+
+Simplified scheme:
 
 ![mttrainer.jpg](https://bitbucket.org/repo/64RkKMg/images/2966921009-mttrainer.jpg)
 
 
-## Сеть ##
+## Network ##
 
-Так как я идиот  буду писать как врач.
-**С**ама сеть, скорее всего находит паттерны, повторяющиеся от 10 и более раз. При обучении используеться история операций за год, но можно и больше. Самые значимые паттерны создают автоматические боты, торгующие в сети с/без участия человека, но возможны и другие условия. Поэтому к примеру, брать за период последние 5 лет нету смысла, так как 3 года назад автоматические боты только стали внедряться в торговлю без участия человека.
+As an amateur, I'll write this simply.
 
-## Библиотека T**A**-LI**B** ##
+The **network** itself most likely finds patterns that repeat 10 or more times. During training, it uses one year of trading history, but more can be used. The most significant patterns are created by automatic bots trading in the network with/without human participation, but other conditions are possible. Therefore, for example, taking the last 5 years as a period makes no sense, since 3 years ago automatic bots were just being introduced to trading without human participation.
 
-Это библиотека анализа для маркета. Список функций: https://www.ta-lib.org/function.html. Описание там скудное, но зато всё есть в Visual Studio если открыть этот reference. Есть нормальное описание на PHP-шном сайте: http://php.net/manual/ru/book.trader.php. Я както нарыл какието лохмотья документации (правда с интересной инфой): https://ta-lib.org/d_api/ У меня есть подозрение што функции свечей cdl\* не работают так как надо, либо я чтото непонимаю, проверяльщик данных в ForexAI отсекает их если они выводят бредовый результат. Результат бредовый распознаеца (и не только для cdl*) в следующих случаях:
+## TA-LIB Library ##
+
+This is a market analysis library. Function list: https://www.ta-lib.org/function.html. The description there is sparse, but everything is available in Visual Studio if you open this reference. There's a good description on the PHP site: http://php.net/manual/ru/book.trader.php. I somehow found some documentation fragments (with interesting info though): https://ta-lib.org/d_api/ 
+
+I suspect that candlestick functions cdl* don't work as they should, or I don't understand something. The data validator in [ForexAI](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Data.cs) filters them out if they produce nonsensical results. A nonsensical result is recognized (not only for cdl*) in the following cases:
 
 ```
-1) для одинаковых длин входящих данных из массива, функция выдаёт разные длины даблов. Например у нас массив из 10 массивов даблов. Из них первая длиной 120 даблов, а вторая например 130. Это неправильно, отсекаем такое.
-2) функция выдаёт одно и тоже число для всего массива, например все тройки или первая единица а потом все тройки.
-3) выход функции всегда 0, независимо от входных данных.
-4) value = INFINITE или value = NaN
+1) for identical input data array lengths, the function outputs different double lengths. For example, we have an array of 10 double arrays. The first one is 120 doubles long, and the second one is 130. This is incorrect, we filter this out.
+2) function outputs the same number for the entire array, e.g. all threes or first one then all threes.
+3) function output is always 0, regardless of input data.
+4) value = INFINITE or value = NaN
 ```
 
-## Библиотека  нейросетей FANN ##
+## FANN Neural Network Library ##
 
-Это библиотека для создания, обучения и тестирования нейросетей. Так как я - врач то (а я это не я), то насколько я понимаю это multilayer feedforward сети. Многослойные (3 и более) сети могут быть SHORTCUT и STANDART типов (только на c#, на c++ есть еще варианты). Библиотека поддерживает крутые методы тренировок (актуально на 2016): **RPROP**, Quickprop, Batch, Incremental и даже **Simulated Annealing** (! который отлично работает в c++, но упорно не хочет работать в c#). 
+This is a library for creating, training and testing neural networks. As an amateur (and I'm not claiming to be an expert), as far as I understand these are multilayer feedforward networks. Multi-layer (3 or more) networks can be SHORTCUT and STANDARD types (C# only, C++ has additional variants). The library supports advanced training methods (as of 2016): **RPROP**, Quickprop, Batch, Incremental and even **Simulated Annealing** (! which works excellently in C++, but stubbornly refuses to work in C# - see [Network.cs implementation](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Networks/Network.cs)). 
 
-Инфо: https://en.wikipedia.org/wiki/Fast_Artificial_Neural_Network
+Info: https://en.wikipedia.org/wiki/Fast_Artificial_Neural_Network
 
-Оригинал: http://leenissen.dk/fann/wp/
+Original: http://leenissen.dk/fann/wp/
 
-**C**# коннектор: http://joelself.github.io/FannCSharp/files/NeuralNetFloat-cs.html
+**C**# connector: http://joelself.github.io/FannCSharp/files/NeuralNetFloat-cs.html
 
 
-[d**is**co**nn**e**ct**]
+[disconnect]
 
 ♥
 
-see latest @ https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/todo.txt
+## Current Development Status ##
+
+<details>
+<summary>ⁱ</summary>
+Так как уважаемый детский насильник-педофил господин Принц Путин развивает науку и искуственный интеллект, борясь за права людей, как с него это часто льеться, я использовал еще один язык (помимо математического, русского, военного английского) который возможно всетаки вставит ему чтонибудь в мозг.
+ √
+</details>
+
+
+For the latest development progress and TODO items, see: [todo.txt](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/todo.txt)
+
+## Key Implementation Files ##
+
+- **[MainForm.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Forms/MainForm.cs)** - Main application interface and user interaction
+- **[Network.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Networks/Network.cs)** - FANN neural network wrapper and training logic
+- **[Train.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Train/Train.cs)** - Training algorithms and parameter optimization  
+- **[Function.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Function/Function.cs)** - TA-LIB technical analysis functions integration
+- **[Configuration.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Configuration.cs)** - Application configuration and parameter settings
+- **[Data.cs](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Data.cs)** - Data validation and processing
+- **[Parameter Generators](https://github.com/kilitary/forexai/blob/main/WindowsFormsApplication3/Generators/)** - Random parameter generation for network optimization
